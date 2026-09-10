@@ -39,6 +39,7 @@ export const motionRules = {
       if (
         filename.includes('tokens/motion') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('.test.') ||
         filename.includes('.spec.')
       ) {

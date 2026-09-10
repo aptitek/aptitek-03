@@ -280,9 +280,11 @@ import Chip from '@mui/material/Chip';
 
   it('permits semantic HTML5 landmarks such as <main> in layout files', async () => {
     const validLayout = `---
+import '../styles/global.css';
+const { theme = 'dark' } = Astro.props;
 ---
 <!doctype html>
-<html>
+<html lang="fr" data-theme={theme}>
   <head></head>
   <body>
     <main class="a4-document-canvas">
@@ -303,5 +305,142 @@ import Chip from '@mui/material/Chip';
         m.ruleId === 'm3-theme/forbid-native-elements',
     );
     expect(layoutErrors).toHaveLength(0);
+  });
+
+  it('reports missing data-theme attribute on root <html> in layout files', async () => {
+    const invalidLayout = `---
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="fr">
+  <head></head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(invalidLayout, {
+      filePath: 'src/layouts/UnthemedLayout.astro',
+    });
+
+    const themeErrors = results[0]?.messages.filter(
+      (m) =>
+        m.ruleId === 'm3-theme/enforce-theme-attribute' ||
+        (m.ruleId === 'no-restricted-syntax' &&
+          m.message.includes("must define a 'data-theme' attribute")),
+    );
+    expect(themeErrors.length).toBeGreaterThan(0);
+  });
+
+  it('reports missing theme stylesheet import in layout files', async () => {
+    const invalidLayout = `---
+const { theme = 'dark' } = Astro.props;
+---
+<!doctype html>
+<html lang="fr" data-theme={theme}>
+  <head></head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(invalidLayout, {
+      filePath: 'src/layouts/NoStylesheetLayout.astro',
+    });
+
+    const stylesheetErrors = results[0]?.messages.filter(
+      (m) => m.ruleId === 'm3-theme/enforce-theme-stylesheet',
+    );
+    expect(stylesheetErrors.length).toBeGreaterThan(0);
+  });
+
+  it('permits layout with data-theme attribute and theme stylesheet', async () => {
+    const validLayout = `---
+import '../tokens/solarized/solarized.css';
+const { theme = 'dark' } = Astro.props;
+---
+<!doctype html>
+<html lang="fr" data-theme={theme}>
+  <head></head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(validLayout, {
+      filePath: 'src/layouts/ThemedLayout.astro',
+    });
+
+    const themeErrors = results[0]?.messages.filter(
+      (m) =>
+        m.ruleId === 'm3-theme/enforce-theme-attribute' ||
+        m.ruleId === 'm3-theme/enforce-theme-stylesheet' ||
+        (m.ruleId === 'no-restricted-syntax' &&
+          m.message.includes("must define a 'data-theme' attribute")),
+    );
+    expect(themeErrors).toHaveLength(0);
+  });
+
+  it('reports missing Google Fonts links in layout files', async () => {
+    const invalidLayout = `---
+import '../styles/global.css';
+const { theme = 'dark' } = Astro.props;
+---
+<!doctype html>
+<html lang="fr" data-theme={theme}>
+  <head>
+    <title>No Fonts</title>
+  </head>
+  <body>
+    <main><slot /></main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(invalidLayout, {
+      filePath: 'src/layouts/NoFontsLayout.astro',
+    });
+
+    const fontErrors = results[0]?.messages.filter(
+      (m) => m.ruleId === 'm3-theme/enforce-typography-links',
+    );
+    expect(fontErrors.length).toBeGreaterThan(0);
+  });
+
+  it('permits layout files linking Google Fonts for design system typography', async () => {
+    const validLayout = `---
+import '../styles/global.css';
+const { theme = 'dark' } = Astro.props;
+---
+<!doctype html>
+<html lang="fr" data-theme={theme}>
+  <head>
+    <title>With Fonts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap" />
+  </head>
+  <body>
+    <main><slot /></main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(validLayout, {
+      filePath: 'src/layouts/WithFontsLayout.astro',
+    });
+
+    const fontErrors = results[0]?.messages.filter(
+      (m) => m.ruleId === 'm3-theme/enforce-typography-links',
+    );
+    expect(fontErrors).toHaveLength(0);
   });
 });

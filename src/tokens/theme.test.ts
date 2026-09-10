@@ -4,6 +4,10 @@ import {
   lightTheme,
   debugTheme,
   getThemeByMode,
+  getTheme,
+  THEMES,
+  DEFAULT_THEME,
+  solarizedTheme,
   ROLE_COLORS,
   CELESTIAL_COLORS,
   FLAG_COLORS,
@@ -23,12 +27,23 @@ describe('Theme definitions & Named Color Tokens', () => {
     expect(darkTheme.palette.background.default).toBe('#002b36');
     expect(lightTheme.palette.background.default).toBe('#fdf6e3');
     expect(debugTheme.palette.background.default).toBe('#120024');
+
+    expect(DEFAULT_THEME).toBe('solarized');
+    expect(THEMES.solarized).toBe(solarizedTheme);
   });
 
-  it('retrieves proper theme using getThemeByMode', () => {
+  it('retrieves proper theme using getThemeByMode and dynamic getTheme selector', () => {
     expect(getThemeByMode('dark').palette.mode).toBe('dark');
     expect(getThemeByMode('light').palette.mode).toBe('light');
     expect(getThemeByMode('debug').palette.primary.main).toBe('#00ff66');
+
+    expect(getTheme('dark').palette.mode).toBe('dark');
+    expect(getTheme({ theme: 'solarized', mode: 'light' }).palette.mode).toBe(
+      'light',
+    );
+    expect(
+      getTheme({ theme: 'solarized', mode: 'debug' }).palette.primary.main,
+    ).toBe('#00ff66');
   });
 
   it('enforces pure highlights with zero drop shadows in darkmode', () => {

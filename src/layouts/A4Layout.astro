@@ -6,6 +6,8 @@ import '../styles/documents.css';
 interface Props {
   title?: string;
   description?: string;
+  theme?: string;
+  pdfTheme?: string;
   pdf?: boolean;
   pdfUrl?: string;
   pdfLabel?: string;
@@ -13,6 +15,8 @@ interface Props {
   frontmatter?: {
     title?: string;
     description?: string;
+    theme?: string;
+    pdfTheme?: string;
     pdf?: boolean;
     pdfUrl?: string;
     pdfLabel?: string;
@@ -28,6 +32,8 @@ const description =
   Astro.props.description ||
   frontmatter.description ||
   t.documents.a4DefaultDescription;
+const theme = Astro.props.theme || frontmatter.theme || 'dark';
+const pdfTheme = Astro.props.pdfTheme || frontmatter.pdfTheme || 'light';
 const pdf = Astro.props.pdf ?? frontmatter.pdf ?? true;
 const pdfUrl = Astro.props.pdfUrl || frontmatter.pdfUrl;
 const pdfLabel =
@@ -43,7 +49,7 @@ const autoFileName =
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme={theme} data-pdf-theme={pdfTheme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,11 +57,11 @@ const autoFileName =
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <!-- Google Fonts Inter for clean editorial typography -->
+    <!-- Google Fonts: Inter, Recursive & JetBrains Mono for Design System Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"
       rel="stylesheet"
     />
   </head>

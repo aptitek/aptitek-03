@@ -9,3 +9,4 @@ export * from './colorUtils.js';
 export * from './namedColors.js';
 export * from './themeComponents.js';
 export * from './holo.js';
+export * as solarized from './solarized/index.js';

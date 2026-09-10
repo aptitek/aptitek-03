@@ -197,6 +197,7 @@ export const spacingRules = {
       const isTokenOrTest =
         filename.includes('tokens/spacing') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('.test.') ||
         filename.includes('.spec.');
 
@@ -425,6 +426,7 @@ export const spacingRules = {
       const isTokenOrTest =
         filename.includes('tokens/spacing') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('.test.') ||
         filename.includes('.spec.');
 

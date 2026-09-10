@@ -14,6 +14,7 @@ interface PdfTask {
   sourceFile: string;
   route: string;
   outputPdfPath: string;
+  pdfTheme: string;
 }
 
 /**
@@ -86,10 +87,16 @@ function discoverPdfPages(dir: string): PdfTask[] {
               ? frontmatter.pdfUrl.replace(/^\//, '')
               : `pdf${cleanRoute}.pdf`;
 
+          const pdfTheme =
+            typeof frontmatter.pdfTheme === 'string'
+              ? frontmatter.pdfTheme
+              : 'light';
+
           tasks.push({
             sourceFile: fullPath,
             route: cleanRoute || '/',
             outputPdfPath: targetPdf,
+            pdfTheme,
           });
         }
       }
@@ -195,6 +202,13 @@ async function main() {
       // Navigate to the static page
       const url = `http://127.0.0.1:${port}${task.route}`;
       await page.goto(url, { waitUntil: 'networkidle' });
+
+      // Enforce light theme in PDF rendering (override any web theme)
+      await page.evaluate((themeToApply) => {
+        document.documentElement.setAttribute('data-theme', themeToApply);
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add(themeToApply);
+      }, task.pdfTheme);
 
       // Emulate print media so @media print styles apply
       await page.emulateMedia({ media: 'print' });

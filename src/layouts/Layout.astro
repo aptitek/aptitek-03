@@ -5,17 +5,19 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  theme?: string;
 }
 
 const t = useTranslations();
 const {
   title = t.layout.defaultTitle,
   description = t.layout.defaultDescription,
+  theme = 'dark',
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,6 +26,13 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <!-- Google Fonts for AptiTek Design System Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..1000,0..1,0..1,0..1&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <slot />

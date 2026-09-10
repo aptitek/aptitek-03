@@ -4,6 +4,7 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { AppThemeProvider } from './AppThemeProvider.tsx';
 
 export interface PdfDownloadFabProps {
   /**
@@ -83,39 +84,41 @@ export function PdfDownloadFab({
   }, [pdfUrl, downloadFileName]);
 
   return (
-    <Box
-      className={`pdf-fab-container ${className}`.trim()}
-      sx={{
-        position: 'fixed',
-        bottom: '32px',
-        right: '32px',
-        zIndex: 1300,
-      }}
-    >
-      <Tooltip title={label} placement="left" arrow>
-        <Fab
-          color={color}
-          size={size}
-          aria-label={label}
-          onClick={handleClick}
-          data-testid="pdf-download-fab"
-          sx={{
-            boxShadow: '0 6px 16px rgba(0, 0, 0, 0.28)',
-            transition:
-              'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-            '&:hover': {
-              transform: 'scale(1.06)',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-            },
-            '@media print': {
-              display: 'none !important',
-            },
-            ...sx,
-          }}
-        >
-          <PictureAsPdfRoundedIcon />
-        </Fab>
-      </Tooltip>
-    </Box>
+    <AppThemeProvider>
+      <Box
+        className={`pdf-fab-container ${className}`.trim()}
+        sx={{
+          position: 'fixed',
+          bottom: '32px',
+          right: '32px',
+          zIndex: 1300,
+        }}
+      >
+        <Tooltip title={label} placement="left" arrow>
+          <Fab
+            color={color}
+            size={size}
+            aria-label={label}
+            onClick={handleClick}
+            data-testid="pdf-download-fab"
+            sx={{
+              boxShadow: '0 6px 16px rgba(0, 0, 0, 0.28)',
+              transition:
+                'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              '&:hover': {
+                transform: 'scale(1.06)',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+              },
+              '@media print': {
+                display: 'none !important',
+              },
+              ...sx,
+            }}
+          >
+            <PictureAsPdfRoundedIcon />
+          </Fab>
+        </Tooltip>
+      </Box>
+    </AppThemeProvider>
   );
 }

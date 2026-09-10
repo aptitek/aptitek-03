@@ -86,6 +86,45 @@ export const cssTokensPlugin = {
       },
     },
 
+    'no-raw-font-family': {
+      meta: {
+        type: 'problem',
+        docs: {
+          description:
+            'Disallow raw font-family declarations in CSS files. Enforce typography design tokens (var(--font-family-*)).',
+          recommended: true,
+        },
+        messages: {
+          noRawFontFamily:
+            "Raw font-family '{{value}}' detected in CSS. Use design tokens (e.g. var(--font-family-brand), var(--font-family-plain), var(--font-family-code)) instead.",
+        },
+      },
+      create(context) {
+        return {
+          Declaration(node) {
+            if (node.property?.toLowerCase() === 'font-family') {
+              const val = (
+                context.sourceCode?.getText(node.value) || ''
+              ).trim();
+              if (
+                val.includes('var(--font-family-') ||
+                val === 'inherit' ||
+                val === 'initial' ||
+                val === 'unset'
+              ) {
+                return;
+              }
+              context.report({
+                loc: node.loc,
+                messageId: 'noRawFontFamily',
+                data: { value: val },
+              });
+            }
+          },
+        };
+      },
+    },
+
     'no-universal-transition': {
       meta: {
         type: 'problem',

@@ -74,6 +74,7 @@ export const elevationRules = {
       const isTokenOrTest =
         filename.includes('tokens/shadows') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('tokens/elevation') ||
         filename.includes('.test.') ||
         filename.includes('.spec.');
@@ -255,6 +256,7 @@ export const elevationRules = {
       const isTokenOrTest =
         filename.includes('tokens/shadows') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('tokens/elevation') ||
         filename.includes('.test.') ||
         filename.includes('.spec.');

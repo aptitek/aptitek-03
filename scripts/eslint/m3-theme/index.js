@@ -17,6 +17,7 @@ import { spacingRules } from './spacing-rules.js';
 import { stateRules } from './state-rules.js';
 import { typographyRules } from './typography-rules.js';
 import { elementRules } from './element-rules.js';
+import { themeRules } from './theme-rules.js';
 
 export const m3ThemePlugin = {
   meta: { name: 'eslint-plugin-m3-theme' },
@@ -32,6 +33,7 @@ export const m3ThemePlugin = {
     ...stateRules,
     ...typographyRules,
     ...elementRules,
+    ...themeRules,
   },
 };
 

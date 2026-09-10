@@ -1,118 +1,16 @@
+/**
+ * Material Design 3 Design System Tokens
+ *
+ * Core design system token primitives: elevation, motion, state layers,
+ * shapes, spacing, line strokes, dimensions, and typography.
+ * Theme-specific color palettes (Solarized) are imported from ./solarized/solarized.css.
+ */
+
+@import './solarized/solarized.css';
+
 :root,
 .dark,
 [data-theme='dark'] {
-  /* Solarized Canonical Base Palette */
-  --color-solarized-base03: #002b36;
-  --color-solarized-base02: #073642;
-  --color-solarized-base01: #586e75;
-  --color-solarized-base00: #657b83;
-  --color-solarized-base0: #839496;
-  --color-solarized-base1: #93a1a1;
-  --color-solarized-base2: #eee8d5;
-  --color-solarized-base3: #fdf6e3;
-  --color-solarized-yellow: #b58900;
-  --color-solarized-orange: #cb4b16;
-  --color-solarized-red: #dc322f;
-  --color-solarized-magenta: #d33682;
-  --color-solarized-violet: #6c71c4;
-  --color-solarized-blue: #268bd2;
-  --color-solarized-cyan: #2aa198;
-  --color-solarized-green: #859900;
-
-  /* Official Identity Card & National / International flag colours */
-  --color-flag-eu-blue: #003399;
-  --color-flag-eu-gold: #ffcc00;
-  --color-flag-fr-blue: #002654;
-  --color-flag-fr-white: #ffffff;
-  --color-flag-fr-red: #ed2939;
-  --color-flag-uk-blue: #012169;
-  --color-flag-uk-red: #c8102e;
-  --color-flag-uk-white: #ffffff;
-  --color-eu-blue: var(--color-flag-eu-blue);
-  --color-eu-gold: var(--color-flag-eu-gold);
-
-  /* Application Surface & Accent Color Semantic Tokens */
-  --color-bg: #0f172a;
-  --color-card: #1e293b;
-  --color-text: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-primary: #3b82f6;
-  --color-border: #334155;
-
-  /* Named Role Color Tokens */
-  --color-role-student: var(--color-solarized-green);
-  --color-role-instructor: var(--color-solarized-blue);
-  --color-role-admin: var(--color-solarized-magenta);
-  --color-role-guest: var(--color-solarized-base01);
-
-  /* Named Diploma Color Tokens */
-  --color-diploma-c: var(--color-solarized-base01);
-  --color-diploma-f: var(--color-solarized-blue);
-  --color-diploma-l: var(--color-solarized-green);
-  --color-diploma-b: var(--color-solarized-yellow);
-  --color-diploma-b-text: var(--color-solarized-base03);
-  --color-diploma-m: var(--color-solarized-magenta);
-  --color-diploma-d: var(--color-solarized-violet);
-  --color-diploma-default: var(--color-solarized-base01);
-
-  /* Named Celestial / Astronomy Tokens */
-  --color-celestial-sun-main: var(--color-solarized-yellow);
-  --color-celestial-sun-glow: #d4a400;
-  --color-celestial-sun-light: var(--color-solarized-base3);
-  --color-celestial-moon-main: var(--color-solarized-blue);
-  --color-celestial-moon-glow: var(--color-solarized-violet);
-  --color-celestial-moon-crater: var(--color-solarized-base01);
-  --color-celestial-horizon-day: var(--color-solarized-base3);
-  --color-celestial-horizon-night: var(--color-solarized-base03);
-
-  /* Material 3 Expressive System Colors - Dark Mode (Solarized Dark) */
-  --md-sys-color-primary: var(--color-solarized-blue); /* #268bd2 */
-  --md-sys-color-surface-tint: var(--color-solarized-blue);
-  --md-sys-color-on-primary: var(--color-solarized-base03); /* #002b36 */
-  --md-sys-color-primary-container: var(--color-solarized-base02); /* #073642 */
-  --md-sys-color-on-primary-container: var(
-    --color-solarized-base0
-  ); /* #839496 */
-
-  --md-sys-color-secondary: var(--color-solarized-cyan); /* #2aa198 */
-  --md-sys-color-on-secondary: var(--color-solarized-base03);
-  --md-sys-color-secondary-container: var(--color-solarized-base02);
-  --md-sys-color-on-secondary-container: var(--color-solarized-base1);
-
-  --md-sys-color-tertiary: var(--color-solarized-magenta); /* #d33682 */
-  --md-sys-color-on-tertiary: var(--color-solarized-base3);
-  --md-sys-color-tertiary-container: var(--color-solarized-base02);
-  --md-sys-color-on-tertiary-container: var(--color-solarized-magenta);
-
-  --md-sys-color-error: var(--color-solarized-red); /* #dc322f */
-  --md-sys-color-on-error: var(--color-solarized-base3);
-  --md-sys-color-error-container: var(--color-solarized-base02);
-  --md-sys-color-on-error-container: var(--color-solarized-red);
-
-  --md-sys-color-background: var(--color-solarized-base03); /* #002b36 */
-  --md-sys-color-on-background: var(--color-solarized-base0); /* #839496 */
-  --md-sys-color-surface: var(--color-solarized-base03);
-  --md-sys-color-on-surface: var(--color-solarized-base0);
-  --md-sys-color-surface-variant: var(--color-solarized-base02);
-  --md-sys-color-on-surface-variant: var(--color-solarized-base1);
-
-  --md-sys-color-outline: var(--color-solarized-base01); /* #586e75 */
-  --md-sys-color-outline-variant: rgba(88, 110, 117, 0.3);
-  --md-sys-color-shadow: transparent;
-  --md-sys-color-scrim: #000000;
-
-  --md-sys-color-inverse-surface: var(--color-solarized-base2);
-  --md-sys-color-inverse-on-surface: var(--color-solarized-base03);
-  --md-sys-color-inverse-primary: #1e6fa8;
-
-  --md-sys-color-surface-dim: #002129;
-  --md-sys-color-surface-bright: #073642;
-  --md-sys-color-surface-container-lowest: #001f27;
-  --md-sys-color-surface-container-low: #002b36;
-  --md-sys-color-surface-container: #073642;
-  --md-sys-color-surface-container-high: #0a4351;
-  --md-sys-color-surface-container-highest: #0d5162;
-
   /* Material 3 Elevation Tokens - Dark Mode (Pure Highlights, No Drop Shadows) */
   --md-sys-elevation-highlight: rgba(255, 255, 255, 0.08);
   --md-sys-elevation-level0: none;
@@ -239,13 +137,11 @@
   --font-family-brand:
     'Recursive', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     sans-serif;
-  --font-family-mono:
-    'Recursive', 'JetBrains Mono', 'Fira Code', SFMono-Regular, Menlo, Monaco,
+  --font-family-plain:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-code:
+    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, monospace;
-  --font-family-display: 'Recursive', sans-serif;
-  --font-family-mrz: 'OCR-B', 'Recursive', 'Courier New', Courier, monospace;
-  --font-family-logo: 'Milkshake', cursive, sans-serif;
-  --font-family-icons: 'Material Symbols Rounded', sans-serif;
 
   /* Recursive Variable Font Presets */
   --font-variation-casual: 'CASL' 1, 'MONO' 0, 'slnt' 0, 'CRSV' 0.5;
@@ -306,54 +202,6 @@
 
 .light,
 [data-theme='light'] {
-  /* Material 3 Expressive System Colors - Light Mode (Solarized Light) */
-  --md-sys-color-primary: var(--color-solarized-blue); /* #268bd2 */
-  --md-sys-color-surface-tint: var(--color-solarized-blue);
-  --md-sys-color-on-primary: var(--color-solarized-base3); /* #fdf6e3 */
-  --md-sys-color-primary-container: var(--color-solarized-base2); /* #eee8d5 */
-  --md-sys-color-on-primary-container: var(
-    --color-solarized-base03
-  ); /* #002b36 */
-
-  --md-sys-color-secondary: var(--color-solarized-magenta); /* #d33682 */
-  --md-sys-color-on-secondary: var(--color-solarized-base3);
-  --md-sys-color-secondary-container: var(--color-solarized-base2);
-  --md-sys-color-on-secondary-container: var(--color-solarized-base02);
-
-  --md-sys-color-tertiary: var(--color-solarized-cyan); /* #2aa198 */
-  --md-sys-color-on-tertiary: var(--color-solarized-base3);
-  --md-sys-color-tertiary-container: var(--color-solarized-base2);
-  --md-sys-color-on-tertiary-container: var(--color-solarized-base02);
-
-  --md-sys-color-error: var(--color-solarized-red); /* #dc322f */
-  --md-sys-color-on-error: var(--color-solarized-base3);
-  --md-sys-color-error-container: var(--color-solarized-base2);
-  --md-sys-color-on-error-container: var(--color-solarized-red);
-
-  --md-sys-color-background: var(--color-solarized-base3); /* #fdf6e3 */
-  --md-sys-color-on-background: var(--color-solarized-base00); /* #657b83 */
-  --md-sys-color-surface: var(--color-solarized-base3);
-  --md-sys-color-on-surface: var(--color-solarized-base00);
-  --md-sys-color-surface-variant: var(--color-solarized-base2);
-  --md-sys-color-on-surface-variant: var(--color-solarized-base01);
-
-  --md-sys-color-outline: var(--color-solarized-base1); /* #93a1a1 */
-  --md-sys-color-outline-variant: rgba(88, 110, 117, 0.2);
-  --md-sys-color-shadow: #000000;
-  --md-sys-color-scrim: #000000;
-
-  --md-sys-color-inverse-surface: var(--color-solarized-base02);
-  --md-sys-color-inverse-on-surface: var(--color-solarized-base3);
-  --md-sys-color-inverse-primary: #85c8ff;
-
-  --md-sys-color-surface-dim: #dfd8c4;
-  --md-sys-color-surface-bright: #fffdf6;
-  --md-sys-color-surface-container-lowest: #ffffff;
-  --md-sys-color-surface-container-low: #fdf6e3;
-  --md-sys-color-surface-container: #eee8d5;
-  --md-sys-color-surface-container-high: #e3ddca;
-  --md-sys-color-surface-container-highest: #d8d1bc;
-
   /* Material 3 Elevation Tokens - Light Mode */
   --md-sys-elevation-highlight: rgba(0, 0, 0, 0);
   --md-sys-elevation-level0: none;
@@ -367,68 +215,4 @@
     0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.3);
   --md-sys-elevation-level5:
     0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
-}
-
-.debug,
-[data-theme='debug'] {
-  /* Material 3 Expressive System Colors - Debug Mode (Loud Neon Palette to Catch Unstyled Items) */
-  --md-sys-color-primary: #00ff66; /* Neon Lime */
-  --md-sys-color-surface-tint: #00ff66;
-  --md-sys-color-on-primary: #000000;
-  --md-sys-color-primary-container: #003816;
-  --md-sys-color-on-primary-container: #55ff99;
-
-  --md-sys-color-secondary: #ff007f; /* Hot Magenta */
-  --md-sys-color-on-secondary: #ffffff;
-  --md-sys-color-secondary-container: #4d0026;
-  --md-sys-color-on-secondary-container: #ff99cc;
-
-  --md-sys-color-tertiary: #00e5ff; /* Electric Cyan */
-  --md-sys-color-on-tertiary: #000000;
-  --md-sys-color-tertiary-container: #00363d;
-  --md-sys-color-on-tertiary-container: #80f2ff;
-
-  --md-sys-color-error: #ff2a00; /* Vivid Red-Orange */
-  --md-sys-color-on-error: #ffffff;
-  --md-sys-color-error-container: #4d0d00;
-  --md-sys-color-on-error-container: #ff9480;
-
-  --md-sys-color-background: #120024; /* Deep Ultraviolet */
-  --md-sys-color-on-background: #ffff00; /* Neon Yellow Text */
-  --md-sys-color-surface: #190033;
-  --md-sys-color-on-surface: #ffff00;
-  --md-sys-color-surface-variant: #28004d;
-  --md-sys-color-on-surface-variant: #00ffff; /* Electric Cyan Subtext */
-
-  --md-sys-color-outline: #ff00aa;
-  --md-sys-color-outline-variant: rgba(255, 0, 170, 0.4);
-  --md-sys-color-shadow: transparent;
-  --md-sys-color-scrim: #000000;
-
-  --md-sys-color-inverse-surface: #ffff00;
-  --md-sys-color-inverse-on-surface: #120024;
-  --md-sys-color-inverse-primary: #006622;
-
-  --md-sys-color-surface-dim: #0e001c;
-  --md-sys-color-surface-bright: #30005a;
-  --md-sys-color-surface-container-lowest: #0a0014;
-  --md-sys-color-surface-container-low: #15002b;
-  --md-sys-color-surface-container: #200042;
-  --md-sys-color-surface-container-high: #2c0059;
-  --md-sys-color-surface-container-highest: #3b0078;
-
-  /* Named Role Color Tokens - Debug Mode */
-  --color-role-student: #00ff66;
-  --color-role-instructor: #00e5ff;
-  --color-role-admin: #ff00aa;
-  --color-role-guest: #a855f7;
-
-  /* Material 3 Elevation Tokens - Debug Mode (Vivid Highlight Rings, No Drop Shadows) */
-  --md-sys-elevation-highlight: #00ff66;
-  --md-sys-elevation-level0: none;
-  --md-sys-elevation-level1: 0 0 0 2px #00ff66;
-  --md-sys-elevation-level2: 0 0 0 2px #00e5ff;
-  --md-sys-elevation-level3: 0 0 0 2px #ff007f;
-  --md-sys-elevation-level4: 0 0 0 3px #ffff00;
-  --md-sys-elevation-level5: 0 0 0 3px #ff00aa;
 }

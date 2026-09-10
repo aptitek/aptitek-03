@@ -25,6 +25,8 @@
  *      (white, black, transparent) in compliance with `css-tokens/no-raw-colors`.
  */
 
+@import '../tokens/tokens.css';
+
 /* -----------------------------------------------------------------------------
  * Page Geometry for Print Engines
  * Justification: Instructs Chromium / Playwright PDF generator and physical printers
@@ -47,11 +49,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: radial-gradient(
-      circle at 50% 0%,
-      var(--color-card) 0%,
-      var(--color-bg) 100%
-    );
+    background: var(--color-bg);
+    font-family: var(--font-family-plain);
   }
 }
 
@@ -68,15 +67,17 @@
   height: 297mm;
   max-height: 297mm;
   box-sizing: border-box;
-  background: white;
-  color: var(--color-bg);
+  background: var(--color-card);
+  color: var(--color-text);
+  font-family: var(--font-family-plain);
   padding: 18mm 20mm;
   margin: 24px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--md-sys-elevation-level3);
-  border-radius: 3px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
   overflow: hidden;
   line-height: 1.5;
   font-size: 11pt;
@@ -98,11 +99,13 @@
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-family: var(--font-family-plain);
 }
 
 .a4-header-title {
+  font-family: var(--font-family-brand);
   font-weight: 600;
-  color: var(--color-card);
+  color: var(--color-primary);
   margin-right: 8px;
 }
 
@@ -132,6 +135,7 @@
   border-top: 1px solid var(--color-border);
   font-size: 8.5pt;
   color: var(--color-text-muted);
+  font-family: var(--font-family-plain);
 }
 
 .a4-footer-page {
@@ -143,38 +147,42 @@
  * Justification: Scaled explicitly for high-resolution 300+ DPI paper output.
  * -------------------------------------------------------------------------- */
 .a4-page-sheet h1 {
+  font-family: var(--font-family-brand);
   font-size: 20pt;
   font-weight: 700;
   line-height: 1.25;
-  color: var(--color-bg);
+  color: var(--color-primary);
   margin-top: 0;
   margin-bottom: 4mm;
   letter-spacing: -0.02em;
 }
 
 .a4-page-sheet h2 {
+  font-family: var(--font-family-brand);
   font-size: 14pt;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--color-card);
+  color: var(--color-text);
   margin-top: 5mm;
   margin-bottom: 3mm;
-  border-bottom: 1.5px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 1.5mm;
 }
 
 .a4-page-sheet h3 {
+  font-family: var(--font-family-brand);
   font-size: 11.5pt;
   font-weight: 600;
-  color: var(--color-border);
+  color: var(--color-text);
   margin-top: 3.5mm;
   margin-bottom: 2mm;
 }
 
 .a4-page-sheet p {
+  font-family: var(--font-family-plain);
   font-size: 9.5pt;
   line-height: 1.55;
-  color: var(--color-border);
+  color: var(--color-text);
   margin-top: 0;
   margin-bottom: 3mm;
 }
@@ -184,6 +192,7 @@
   border-collapse: collapse;
   margin: 4mm 0;
   font-size: 8.5pt;
+  font-family: var(--font-family-plain);
 }
 
 .a4-page-sheet th,
@@ -194,17 +203,23 @@
 }
 
 .a4-page-sheet th {
-  background-color: var(--color-card);
+  background-color: var(--color-bg);
   font-weight: 600;
-  color: var(--color-card);
+  color: var(--color-primary);
+}
+
+.a4-page-sheet td {
+  color: var(--color-text);
 }
 
 .a4-page-sheet code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-family-code);
   font-size: 8.5pt;
-  background-color: var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-primary);
   padding: 0.5mm 1.5mm;
   border-radius: 3px;
+  border: 1px solid var(--color-border);
 }
 
 /* -----------------------------------------------------------------------------
@@ -221,9 +236,13 @@
 .doc-callout {
   margin-top: 5mm;
   padding: 4mm 5mm;
-  background-color: var(--color-card);
+  background-color: var(--color-bg);
   border-left: 3px solid var(--color-primary);
   border-radius: 4px;
+  color: var(--color-text);
+}
+
+.doc-callout p {
   color: var(--color-text);
 }
 
@@ -244,13 +263,23 @@
  * Pure white background and vector black typography are strictly enforced.
  * -------------------------------------------------------------------------- */
 @media print {
+  :root,
   html,
   body {
+    /* Enforce Solarized Light Theme in PDF & Print rendering */
+    --color-bg: white;
+    --color-card: var(--color-solarized-base2);
+    --color-text: var(--color-solarized-base02);
+    --color-text-muted: var(--color-solarized-base01);
+    --color-primary: var(--color-solarized-blue);
+    --color-border: var(--color-solarized-base2);
     background: white !important;
-    color: black !important;
+    color: var(--color-solarized-base02) !important;
     width: 210mm !important;
     margin: 0 !important;
     padding: 0 !important;
+    color-scheme: light !important;
+    font-family: var(--font-family-plain) !important;
   }
 
   .a4-document-canvas {
@@ -258,20 +287,89 @@
     padding: 0 !important;
     margin: 0 !important;
     background: none !important;
+    font-family: var(--font-family-plain) !important;
   }
 
   .a4-page-sheet {
+    background: white !important;
+    color: var(--color-solarized-base02) !important;
+    font-family: var(--font-family-plain) !important;
     width: 210mm !important;
     min-height: 297mm !important;
     height: 297mm !important;
     max-height: 297mm !important;
     margin: 0 !important;
     border-radius: 0 !important;
+    border: none !important;
     box-shadow: none !important;
     break-after: page;
     page-break-after: always;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .a4-page-sheet h1 {
+    font-family: var(--font-family-brand) !important;
+    color: var(--color-solarized-blue) !important;
+  }
+
+  .a4-page-sheet h2 {
+    font-family: var(--font-family-brand) !important;
+    color: var(--color-solarized-base02) !important;
+    border-bottom: 1.5px solid var(--color-solarized-base2) !important;
+  }
+
+  .a4-page-sheet h3 {
+    font-family: var(--font-family-brand) !important;
+    color: var(--color-solarized-base01) !important;
+  }
+
+  .a4-page-sheet p {
+    font-family: var(--font-family-plain) !important;
+    color: var(--color-solarized-base02) !important;
+  }
+
+  .a4-header-title {
+    font-family: var(--font-family-brand) !important;
+    color: var(--color-solarized-blue) !important;
+  }
+
+  .a4-page-header,
+  .a4-page-footer,
+  .doc-subtitle {
+    font-family: var(--font-family-plain) !important;
+    color: var(--color-solarized-base01) !important;
+    border-color: var(--color-solarized-base2) !important;
+  }
+
+  .a4-page-sheet th {
+    background-color: var(--color-solarized-base2) !important;
+    color: var(--color-solarized-base02) !important;
+    border-bottom: 1.5px solid var(--color-solarized-base1) !important;
+    font-family: var(--font-family-plain) !important;
+  }
+
+  .a4-page-sheet td {
+    color: var(--color-solarized-base02) !important;
+    border-bottom: 1px solid var(--color-solarized-base2) !important;
+    font-family: var(--font-family-plain) !important;
+  }
+
+  .a4-page-sheet code {
+    font-family: var(--font-family-code) !important;
+    background-color: var(--color-solarized-base2) !important;
+    color: var(--color-solarized-blue) !important;
+    border: 1px solid var(--color-solarized-base2) !important;
+  }
+
+  .doc-callout {
+    background-color: var(--color-solarized-base2) !important;
+    border-left: 3px solid var(--color-solarized-blue) !important;
+    color: var(--color-solarized-base02) !important;
+  }
+
+  .doc-callout p {
+    color: var(--color-solarized-base02) !important;
   }
 
   .no-print,

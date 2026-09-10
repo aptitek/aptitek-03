@@ -117,6 +117,7 @@ function isExemptFile(filename) {
   return (
     filename.includes('tokens/typography') ||
     filename.includes('tokens/theme') ||
+    filename.includes('tokens/solarized') ||
     filename.includes('.test.') ||
     filename.includes('.spec.')
   );

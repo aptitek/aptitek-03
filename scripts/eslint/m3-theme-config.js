@@ -43,6 +43,9 @@ export const m3ThemeRules = {
   'm3-theme/enforce-state-layers': 'off',
   'm3-theme/enforce-minimum-touch-target': 'error',
   'm3-theme/forbid-native-elements': m3ForbidNativeElementsRule,
+  'm3-theme/enforce-theme-attribute': 'error',
+  'm3-theme/enforce-theme-stylesheet': 'error',
+  'm3-theme/enforce-typography-links': 'error',
 };
 
 export const m3Config = {
@@ -106,6 +109,12 @@ export const layoutOverridesConfig = {
     'no-restricted-syntax': [
       'error',
       ...restrictedSyntaxRule.slice(1),
+      {
+        selector:
+          "JSXOpeningElement[name.name='html']:not(:has(JSXAttribute[name.name='data-theme']))",
+        message:
+          "Root <html> element in layout must define a 'data-theme' attribute (e.g. data-theme={theme} or data-theme='dark') to explicitly enforce the active theme.",
+      },
       {
         selector: "JSXElement[openingElement.name.name='div']",
         message:

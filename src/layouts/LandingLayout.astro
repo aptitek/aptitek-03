@@ -6,9 +6,11 @@ import '../styles/features.css';
 interface Props {
   title?: string;
   description?: string;
+  theme?: string;
   frontmatter?: {
     title?: string;
     description?: string;
+    theme?: string;
   };
 }
 
@@ -19,9 +21,10 @@ const description =
   Astro.props.description ||
   frontmatter.description ||
   t.common.siteDescription;
+const theme = Astro.props.theme || frontmatter.theme || 'dark';
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} theme={theme}>
   <main class="page">
     <slot />
   </main>

@@ -11,6 +11,7 @@ export const cssConfigs = [
     },
     rules: {
       'css-tokens/no-raw-colors': 'error',
+      'css-tokens/no-raw-font-family': 'error',
       'css-tokens/no-universal-transition': 'error',
       'css-tokens/no-tailwind-directives': 'error',
     },
@@ -24,6 +25,7 @@ export const cssConfigs = [
     ],
     rules: {
       'css-tokens/no-raw-colors': 'off',
+      'css-tokens/no-raw-font-family': 'off',
     },
   },
 ];

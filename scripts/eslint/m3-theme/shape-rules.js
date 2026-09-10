@@ -98,6 +98,7 @@ export const shapeRules = {
       const isTokenOrTest =
         filename.includes('tokens/shapes') ||
         filename.includes('tokens/theme') ||
+        filename.includes('tokens/solarized') ||
         filename.includes('.test.') ||
         filename.includes('.spec.');
 
