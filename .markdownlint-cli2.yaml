@@ -1,0 +1,63 @@
+# Only lint pure .md files — MDX is handled by Prettier
+globs:
+  - '**/*.md'
+
+ignores:
+  - 'node_modules/'
+  - 'dist/'
+  - '.astro/'
+  - '.wireit/'
+  - '.agents/'
+  - 'storybook-static/'
+  - 'coverage/'
+  - 'test-results/'
+  - 'playwright-report/'
+
+# Respect .gitignore too
+gitignore: true
+
+config:
+  # Line length: 120 chars, relaxed for tables / URLs / headings
+  MD013:
+    line_length: 120
+    tables: false
+    code_blocks: false
+    headings: false
+
+  # Fenced code blocks must use backticks (not tildes)
+  MD048:
+    style: 'backtick'
+
+  # Require language on fenced code blocks
+  MD040: true
+
+  # Consistent heading style (ATX: # Heading)
+  MD003:
+    style: 'atx'
+
+  # Enforce proper table pipe alignment
+  MD055:
+    style: 'leading_and_trailing'
+
+  # No trailing spaces
+  MD009: true
+
+  # No multiple blank lines
+  MD012: true
+
+  # Blank line before/after fenced code block
+  MD031: true
+
+  # Blank line before/after list
+  MD032: true
+
+  # No bare URLs — use [text](url) format
+  MD034: true
+
+  # Ordered list item prefix
+  MD029:
+    style: 'ordered'
+
+  # First line doesn't need to be a top-level heading
+  # (agent config files like AGENTS.md / CLAUDE.md start with ##)
+  MD041: false

@@ -19,6 +19,7 @@
     "lint:prettier": "wireit",
     "lint:knip": "wireit",
     "lint:typecheck": "wireit",
+    "lint:markdown": "wireit",
     "lint:sonar": "wireit",
     "lint:fix": "wireit",
     "test": "wireit",
@@ -83,6 +84,7 @@
       "dependencies": [
         "lint:eslint",
         "lint:prettier",
+        "lint:markdown",
         "lint:knip",
         "lint:typecheck",
         "lint:sonar"
@@ -131,6 +133,13 @@
         "package.json"
       ]
     },
+    "lint:markdown": {
+      "command": "markdownlint-cli2",
+      "files": [
+        "**/*.md",
+        ".markdownlint-cli2.yaml"
+      ]
+    },
     "lint:sonar": {
       "command": "node -e \"if (process.env.SONAR_TOKEN || process.env.SONAR_HOST_URL) { require('child_process').spawnSync('sonar-scanner-npm', { stdio: 'inherit', shell: true }); } else { console.log('ℹ️ Sonar scan skipped: SONAR_TOKEN / SONAR_HOST_URL not defined'); }\"",
       "files": [
@@ -140,7 +149,7 @@
       ]
     },
     "lint:fix": {
-      "command": "eslint . --fix --cache --cache-location node_modules/.cache/eslint/ && knip --fix && prettier --write --cache --cache-location node_modules/.cache/prettier/ ."
+      "command": "eslint . --fix --cache --cache-location node_modules/.cache/eslint/ && markdownlint-cli2 --fix && knip --fix && prettier --write --cache --cache-location node_modules/.cache/prettier/ ."
     },
     "test": {
       "dependencies": [
@@ -247,6 +256,7 @@
     "globals": "^17.12.0",
     "husky": "^9.1.7",
     "knip": "^6.35.1",
+    "markdownlint-cli2": "^0.23.2",
     "playwright": "^1.63.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^1.0.0",
