@@ -2,8 +2,20 @@
   "$schema": "https://unpkg.com/knip@5/overview/config.schema.json",
   "entry": [
     "src/pages/**/*.{astro,md,mdx,html,js,ts}",
-    "src/**/*.stories.{ts,tsx}"
+    "src/layouts/**/*.{astro,ts}",
+    "src/**/*.stories.{ts,tsx}",
+    "scripts/**/*.{js,ts}"
   ],
-  "project": ["src/**/*.{astro,mdx,js,jsx,ts,tsx}", "tests/**/*.{js,ts}"],
-  "ignoreDependencies": ["@astrojs/check", "@sonar/scan"]
+  "project": [
+    "src/**/*.{astro,mdx,js,jsx,ts,tsx}",
+    "tests/**/*.{js,ts}",
+    "scripts/**/*.{js,ts}"
+  ],
+  "ignoreDependencies": [
+    "@astrojs/check",
+    "@sonar/scan",
+    "@mui/x-date-pickers",
+    "material-shapes-ts",
+    "react-material-expressive"
+  ]
 }

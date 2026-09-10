@@ -1,0 +1,142 @@
+---
+interface Props {
+  pageNumber?: number;
+  totalPages?: number;
+  headerTitle?: string;
+  headerSubtitle?: string;
+  footerText?: string;
+  class?: string;
+}
+
+const {
+  pageNumber,
+  totalPages,
+  headerTitle,
+  headerSubtitle,
+  footerText = 'AptiTek',
+  class: className = '',
+} = Astro.props;
+---
+
+<article class:list={['a4-page-sheet', className]}>
+  {(headerTitle || headerSubtitle || pageNumber) && (
+    <header class="a4-page-header">
+      <div class="a4-header-left">
+        {headerTitle && <span class="a4-header-title">{headerTitle}</span>}
+        {headerSubtitle && (
+          <span class="a4-header-subtitle">{headerSubtitle}</span>
+        )}
+      </div>
+      {pageNumber !== undefined && (
+        <div class="a4-header-right">
+          <span class="a4-header-page">
+            Page {pageNumber}
+            {totalPages ? ` / ${totalPages}` : ''}
+          </span>
+        </div>
+      )}
+    </header>
+  )}
+
+  <div class="a4-page-body">
+    <slot />
+  </div>
+
+  {(footerText || pageNumber !== undefined) && (
+    <footer class="a4-page-footer">
+      <div class="a4-footer-left">
+        <span class="a4-footer-text">{footerText}</span>
+      </div>
+      {pageNumber !== undefined && (
+        <div class="a4-footer-right">
+          <span class="a4-footer-page">
+            {pageNumber}
+            {totalPages ? ` / ${totalPages}` : ''}
+          </span>
+        </div>
+      )}
+    </footer>
+  )}
+</article>
+
+<style>
+  .a4-page-sheet {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    height: 297mm;
+    max-height: 297mm;
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 18mm 20mm;
+    margin: 24px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.25),
+      0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+    line-height: 1.5;
+    font-size: 11pt;
+  }
+
+  .a4-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 3mm;
+    margin-bottom: 6mm;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 8.5pt;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .a4-header-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-right: 8px;
+  }
+
+  .a4-page-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .a4-page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 3mm;
+    margin-top: 6mm;
+    border-top: 1px solid #e2e8f0;
+    font-size: 8.5pt;
+    color: #94a3b8;
+  }
+
+  .a4-footer-page {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media print {
+    .a4-page-sheet {
+      width: 210mm !important;
+      min-height: 297mm !important;
+      height: 297mm !important;
+      max-height: 297mm !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      break-after: page;
+      page-break-after: always;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>

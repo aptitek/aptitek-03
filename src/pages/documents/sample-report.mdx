@@ -1,0 +1,110 @@
+---
+layout: ../../layouts/A4Layout.astro
+title: 'AptiTek — Proposition Technique & Architecture'
+description: 'Rapport technique paginé A4 avec export PDF automatisé Playwright'
+pdf: true
+pdfUrl: '/pdf/documents/sample-report.pdf'
+downloadFileName: 'AptiTek-Proposition-Technique.pdf'
+---
+
+import A4Page from '../../components/A4Page.astro';
+import { Button } from '../../components/Button.tsx';
+
+<A4Page
+  pageNumber={1}
+  totalPages={2}
+  headerTitle="AptiTek Architecture & Conseil"
+  headerSubtitle="Document de Cadrage"
+  footerText="AptiTek © 2026 — Confidentiel"
+>
+  <h1>Proposition Technique & Architecture Frontend</h1>
+
+<p style="font-size: 11pt; color: #475569; margin-bottom: 6mm;">
+  Génération automatisée de documents A4 imprimables et interactifs avec MDX,
+  Astro et Playwright.
+</p>
+
+<h2>1. Contexte & Objectifs</h2>
+<p>
+  Ce document sert de référence pour la mise en place d'un système de
+  publication "Web-to-Print" fondé sur les technologies web modernes.
+  L'intégralité du contenu est rédigée en <strong>MDX</strong>, permettant
+  l'incorporation de logique et de composants React au sein d'une structure
+  Markdown lisible et maintenable.
+</p>
+
+<p>Le document bénéficie d'une double restitution :</p>
+<ul>
+  <li>
+    <strong>Sur le Web :</strong> Affichage sous forme de feuilles A4 centrées
+    sur un espace de travail stylisé, avec contrôle interactif.
+  </li>
+  <li>
+    <strong>En Impression / Export PDF :</strong> Respect strict des dimensions
+    A4 (210mm x 297mm), suppression des interfaces web parasites, et fidélité
+    vectorielle optimale via le moteur Chromium de Playwright.
+  </li>
+</ul>
+
+<h2>2. Stack Technologique Retenue</h2>
+
+| Composant           | Technologie           | Rôle                                          |
+| :------------------ | :-------------------- | :-------------------------------------------- |
+| **Format Source**   | MDX (Markdown + JSX)  | Rédaction unifiée des contenus et métadonnées |
+| **Moteur Web**      | Astro 7 + React 19    | Compilation statique ultra-performante (SSG)  |
+| **Bouton d'Action** | Material UI (MUI Fab) | Bouton flottant ergonomique avec icône PDF    |
+| **Générateur PDF**  | Playwright Chromium   | Restitution vectorielle haute fidélité        |
+
+  <div style="margin-top: 5mm; padding: 4mm 5mm; background-color: #f8fafc; border-left: 3px solid #3b82f6; border-radius: 2px;">
+    <strong>Principe Clé :</strong> Le bouton flottant MUI situé en bas à droite vous permet de télécharger directement le fichier PDF pré-compilé ou de déclencher l'impression standard du navigateur.
+  </div>
+</A4Page>
+
+<A4Page
+  pageNumber={2}
+  totalPages={2}
+  headerTitle="AptiTek Architecture & Conseil"
+  headerSubtitle="Spécifications & Pipeline"
+  footerText="AptiTek © 2026 — Confidentiel"
+>
+  <h2>3. Spécifications du Pipeline de Génération</h2>
+
+<p>
+  Le pipeline d'exportation repose sur l'outil d'automatisation{' '}
+  <strong>Playwright</strong>. Lors du build statique du site, une tâche dédiée
+  parcourt les pages déclarant le drapeau <code>pdf: true</code> :
+</p>
+
+<ol>
+  <li>Lancement d'une instance headless de Chromium.</li>
+  <li>
+    Navigation vers l'URL rendue avec attente de l'état <code>networkidle</code>
+    .
+  </li>
+  <li>
+    Émulation du média d'impression (<code>media: 'print'</code>).
+  </li>
+  <li>
+    Capture au format <strong>A4</strong> avec préservation intégrale des styles
+    d'arrière-plan.
+  </li>
+  <li>
+    Écriture du fichier résultant dans le répertoire <code>public/pdf/</code>.
+  </li>
+</ol>
+
+<h2>4. Validation & Conformité</h2>
+
+| Critère de Qualité      | Résultat Attendu                                               | Statut   |
+| :---------------------- | :------------------------------------------------------------- | :------- |
+| **Dimensions Papier**   | 210mm x 297mm (A4 Portrait)                                    | Conforme |
+| **Ségrégation Print**   | Masquage systématique des boutons FAB et barres d'outils       | Conforme |
+| **Typographie & Rendu** | Polices vectorielles nettes, texte indexable et sélectionnable | Conforme |
+| **Accessibilité**       | Libellés ARIA conformes sur les boutons interactifs            | Conforme |
+
+  <div style="margin-top: 8mm; text-align: center;">
+    <p style="font-size: 8.5pt; color: #64748b;">
+      Document généré pour AptiTek — Tous droits réservés.
+    </p>
+  </div>
+</A4Page>

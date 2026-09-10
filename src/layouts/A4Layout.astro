@@ -1,0 +1,200 @@
+---
+import { PdfDownloadFab } from '../components/PdfDownloadFab.tsx';
+
+interface Props {
+  title?: string;
+  description?: string;
+  pdf?: boolean;
+  pdfUrl?: string;
+  downloadFileName?: string;
+  frontmatter?: {
+    title?: string;
+    description?: string;
+    pdf?: boolean;
+    pdfUrl?: string;
+    downloadFileName?: string;
+  };
+}
+
+const frontmatter = Astro.props.frontmatter || {};
+const title = Astro.props.title || frontmatter.title || 'Document A4 — AptiTek';
+const description =
+  Astro.props.description ||
+  frontmatter.description ||
+  'Document paginé au format A4 généré avec Astro, MDX et Playwright';
+const pdf = Astro.props.pdf ?? frontmatter.pdf ?? true;
+const pdfUrl = Astro.props.pdfUrl || frontmatter.pdfUrl;
+const downloadFileName =
+  Astro.props.downloadFileName || frontmatter.downloadFileName;
+
+// Auto-derive PDF url if not explicitly passed
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const autoPdfUrl = pdfUrl || `/pdf${currentPath}.pdf`;
+const autoFileName =
+  downloadFileName || `${currentPath.split('/').pop() || 'document'}.pdf`;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <!-- Google Fonts Inter for clean editorial typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="a4-document-canvas">
+      <slot />
+    </div>
+
+    {pdf && (
+      <PdfDownloadFab
+        client:load
+        pdfUrl={autoPdfUrl}
+        downloadFileName={autoFileName}
+      />
+    )}
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    font-family:
+      'Inter',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
+    color: #0f172a;
+    background-color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Screen workspace styling */
+  @media screen {
+    .a4-document-canvas {
+      min-height: 100vh;
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+    }
+  }
+
+  /* Print media normalization */
+  @media print {
+    html,
+    body {
+      background: #ffffff !important;
+      color: #000000 !important;
+      width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .a4-document-canvas {
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: none !important;
+    }
+
+    .no-print,
+    .pdf-fab-container,
+    .MuiFab-root {
+      display: none !important;
+    }
+  }
+
+  /* Typography inside A4 pages */
+  .a4-page-sheet h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 4mm;
+    letter-spacing: -0.02em;
+  }
+
+  .a4-page-sheet h2 {
+    font-size: 14pt;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1e293b;
+    margin-top: 5mm;
+    margin-bottom: 3mm;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 1.5mm;
+  }
+
+  .a4-page-sheet h3 {
+    font-size: 11.5pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 3.5mm;
+    margin-bottom: 2mm;
+  }
+
+  .a4-page-sheet p {
+    font-size: 9.5pt;
+    line-height: 1.55;
+    color: #334155;
+    margin-top: 0;
+    margin-bottom: 3mm;
+  }
+
+  .a4-page-sheet table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4mm 0;
+    font-size: 8.5pt;
+  }
+
+  .a4-page-sheet th,
+  .a4-page-sheet td {
+    padding: 2.5mm 3.5mm;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .a4-page-sheet th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .a4-page-sheet code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    background-color: #f1f5f9;
+    padding: 0.5mm 1.5mm;
+    border-radius: 3px;
+  }
+</style>
