@@ -1,0 +1,38 @@
+/**
+ * =============================================================================
+ * Global Core & Reset Stylesheet
+ * =============================================================================
+ *
+ * Architectural Justification:
+ * 1. Separation of Concerns:
+ *    - Layout templates (*.astro) must remain purely structural and semantic,
+ *      free of inline <style> blocks or ad-hoc style declarations.
+ * 2. Design Token Integrity:
+ *    - Exclusively utilizes CSS custom properties (--color-*) defined in tokens.css.
+ * 3. Box Model & Typography Cascade:
+ *    - Global box-sizing reset and system typography cascade.
+ */
+
+@import '../tokens/tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}

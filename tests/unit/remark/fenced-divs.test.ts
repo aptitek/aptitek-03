@@ -26,7 +26,9 @@ Document généré pour AptiTek — Confidentiel.
 `;
 
     const result = await processor.render(doc);
-    expect(result.code).toContain('<p class="doc-subtitle">');
+    expect(result.code).toContain(
+      '<p class="doc-subtitle subtitle">Sous-titre descriptif</p>',
+    );
     expect(result.code).toContain('<aside class="doc-callout" role="note">');
     expect(result.code).toContain(
       '<footer class="doc-footer-container" role="contentinfo">',
@@ -91,5 +93,57 @@ Contenu avec style arbitraire
     await expect(processor.render(invalidDoc)).rejects.toThrow(
       /Raw HTML tag '<div>' is prohibited/,
     );
+  });
+
+  it('transforms :::hero, :::badge, :::features, and :::card directives', async () => {
+    const processor = await getProcessor();
+    const doc = `
+::::hero
+:::badge
+Status Badge
+:::
+
+# Main Title
+
+:::subtitle
+Hero Subtitle
+:::
+::::
+
+::::features
+:::card{title="Feature Title"}
+Feature card description text.
+:::
+::::
+`;
+
+    const result = await processor.render(doc);
+    expect(result.code).toContain('<header class="hero">');
+    expect(result.code).toContain(
+      '<div class="hero-badge" role="status">Status Badge</div>',
+    );
+    expect(result.code).toContain('<p class="doc-subtitle subtitle">');
+    expect(result.code).toContain('<section class="features" role="region">');
+    expect(result.code).toContain('<article class="feature-card">');
+    expect(result.code).toContain('<div class="feature-card__content">');
+    expect(result.code).toContain(
+      '<h2 class="feature-card__title" id="feature-title">Feature Title</h2>',
+    );
+    expect(result.code).toContain(
+      '<p class="feature-card__description">Feature card description text.</p>',
+    );
+  });
+
+  it('transforms leaf and container ::HeroActions directives', async () => {
+    const processor = await getProcessor();
+    const doc = `
+::HeroActions{docsLabel="Custom Docs" sampleDocLabel="Custom Sample"}
+`;
+
+    const result = await processor.render(doc);
+    expect(result.code).toContain('<div class="hero-actions-container"');
+    expect(result.code).toContain('data-component="HeroActions"');
+    expect(result.code).toContain('data-docs-label="Custom Docs"');
+    expect(result.code).toContain('data-sample-label="Custom Sample"');
   });
 });

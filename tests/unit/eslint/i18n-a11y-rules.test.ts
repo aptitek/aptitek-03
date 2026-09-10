@@ -84,6 +84,54 @@ describe('i18n and a11y Enforcement Rules', () => {
 
       expect(i18nErrors).toHaveLength(0);
     });
+
+    it('disallows hardcoded fallback strings in Astro layout declarations', async () => {
+      const invalidLayoutCode = `---
+const description =
+  Astro.props.description ||
+  'Document paginé au format A4 généré avec Astro, MDX et Playwright';
+---
+<div>{description}</div>
+`;
+
+      const results = await eslint.lintText(invalidLayoutCode, {
+        filePath: 'src/layouts/CustomA4Layout.astro',
+      });
+
+      const restrictedErrors = results[0]?.messages.filter(
+        (m) =>
+          m.ruleId === 'no-restricted-syntax' &&
+          m.message.includes(
+            'Hardcoded localized string detected in fallback value',
+          ),
+      );
+
+      expect(restrictedErrors?.length).toBeGreaterThan(0);
+    });
+
+    it('permits translated dictionary fallbacks in Astro layout declarations', async () => {
+      const validLayoutCode = `---
+import { useTranslations } from '../i18n';
+const t = useTranslations();
+const description = Astro.props.description || t.documents.a4DefaultDescription;
+---
+<div>{description}</div>
+`;
+
+      const results = await eslint.lintText(validLayoutCode, {
+        filePath: 'src/layouts/CustomA4Layout.astro',
+      });
+
+      const restrictedErrors = results[0]?.messages.filter(
+        (m) =>
+          m.ruleId === 'no-restricted-syntax' &&
+          m.message.includes(
+            'Hardcoded localized string detected in fallback value',
+          ),
+      );
+
+      expect(restrictedErrors).toHaveLength(0);
+    });
   });
 
   describe('a11y (WCAG 2.1 AA & WCAG 2.5.5 Touch Target)', () => {

@@ -39,7 +39,7 @@ const APPROVED_SEMANTIC_CONTAINERS = new Map([
     'subtitle',
     {
       tag: 'p',
-      className: ['doc-subtitle'],
+      className: ['doc-subtitle', 'subtitle'],
       role: null,
     },
   ],
@@ -59,13 +59,48 @@ const APPROVED_SEMANTIC_CONTAINERS = new Map([
       role: 'region',
     },
   ],
+  [
+    'hero',
+    {
+      tag: 'header',
+      className: ['hero'],
+      role: null,
+    },
+  ],
+  [
+    'badge',
+    {
+      tag: 'div',
+      className: ['hero-badge'],
+      role: 'status',
+    },
+  ],
+  [
+    'features',
+    {
+      tag: 'section',
+      className: ['features'],
+      role: 'region',
+    },
+  ],
+  [
+    'card',
+    {
+      tag: 'article',
+      className: ['feature-card'],
+      role: null,
+    },
+  ],
 ]);
+
+const APPROVED_COMPONENT_DIRECTIVES = new Set(['heroactions', 'hero-actions']);
 
 const HTML_TAG_REGEX = /<\/?([a-zA-Z][a-zA-Z0-9-]*)/;
 
 export function remarkFencedDivsPlugin() {
   return (tree, file) => {
     let autoPageNumber = 0;
+    let hasInjectedHeroActions = false;
     const filePath = file.path || file.history?.[0] || 'document';
     const frontmatter =
       file.data?.astro?.frontmatter || file.data?.frontmatter || {};
@@ -94,27 +129,111 @@ export function remarkFencedDivsPlugin() {
         }
       }
 
-      // 2. Enforce Zero Raw JSX Elements in MDX
+      // 2. Enforce Zero Raw JSX Elements in MDX (Must use directives instead)
       if (
-        node.type === 'mdxJsxFlowElement' ||
-        node.type === 'mdxJsxTextElement'
+        (node.type === 'mdxJsxFlowElement' ||
+          node.type === 'mdxJsxTextElement') &&
+        !node.data?.isGeneratedDirective
       ) {
         const tagName = node.name || 'Component';
         throw new Error(
           `[Markdown Semantic Violation in ${filePath}]: JSX element '<${tagName}>' is prohibited. ` +
-            `Content files must be purely semantic. Use standard Markdown syntax or Pandoc fenced divs (::::page, :::callout).`,
+            `Content files must be purely semantic. Use standard Markdown syntax or Pandoc fenced divs (::::page, :::callout, ::HeroActions).`,
         );
       }
 
-      // 3. Process Container Directives (Pandoc Fenced Divs)
+      // 3. Process Component Directives (Leaf or Container)
+      if (node.type === 'leafDirective' || node.type === 'containerDirective') {
+        const directiveName = (node.name || '').toLowerCase();
+
+        if (APPROVED_COMPONENT_DIRECTIVES.has(directiveName)) {
+          const attrs = node.attributes || {};
+          const docsLabel = attrs.docsLabel || 'Documentation Astro';
+          const sampleDocLabel =
+            attrs.sampleDocLabel || 'Exemple de Document A4';
+
+          node.type = 'mdxJsxFlowElement';
+          node.name = 'HeroActions';
+          node.attributes = [
+            { type: 'mdxJsxAttribute', name: 'client:load', value: null },
+            { type: 'mdxJsxAttribute', name: 'docsLabel', value: docsLabel },
+            {
+              type: 'mdxJsxAttribute',
+              name: 'sampleDocLabel',
+              value: sampleDocLabel,
+            },
+          ];
+          node.children = [];
+          node.data = {
+            isGeneratedDirective: true,
+            hName: 'div',
+            hProperties: {
+              className: ['hero-actions-container'],
+              'data-component': 'HeroActions',
+              'data-docs-label': docsLabel,
+              'data-sample-label': sampleDocLabel,
+            },
+          };
+
+          if (!hasInjectedHeroActions) {
+            hasInjectedHeroActions = true;
+            const hasImport = tree.children.some(
+              (child) =>
+                child.type === 'mdxjsEsm' &&
+                typeof child.value === 'string' &&
+                child.value.includes('HeroActions'),
+            );
+            if (!hasImport) {
+              tree.children.unshift({
+                type: 'mdxjsEsm',
+                value:
+                  "import { HeroActions } from '/src/components/HeroActions.tsx';",
+                data: {
+                  estree: {
+                    type: 'Program',
+                    sourceType: 'module',
+                    body: [
+                      {
+                        type: 'ImportDeclaration',
+                        specifiers: [
+                          {
+                            type: 'ImportSpecifier',
+                            imported: {
+                              type: 'Identifier',
+                              name: 'HeroActions',
+                            },
+                            local: {
+                              type: 'Identifier',
+                              name: 'HeroActions',
+                            },
+                          },
+                        ],
+                        source: {
+                          type: 'Literal',
+                          value: '/src/components/HeroActions.tsx',
+                          raw: "'/src/components/HeroActions.tsx'",
+                        },
+                      },
+                    ],
+                  },
+                },
+              });
+            }
+          }
+          return;
+        }
+      }
+
+      // 4. Process Container Directives (Pandoc Fenced Divs)
       if (node.type === 'containerDirective') {
         const directiveName = node.name.toLowerCase();
         const config = APPROVED_SEMANTIC_CONTAINERS.get(directiveName);
 
         if (!config) {
-          const allowedList = [...APPROVED_SEMANTIC_CONTAINERS.keys()].join(
-            ', ',
-          );
+          const allowedList = [
+            ...APPROVED_SEMANTIC_CONTAINERS.keys(),
+            ...APPROVED_COMPONENT_DIRECTIVES.keys(),
+          ].join(', ');
           throw new Error(
             `[Markdown Semantic Violation in ${filePath}]: ` +
               `Unknown or unapproved fenced div ':::${node.name}'. ` +
@@ -129,6 +248,59 @@ export function remarkFencedDivsPlugin() {
         node.data.hProperties.className = [...config.className];
         if (config.role) {
           node.data.hProperties.role = config.role;
+        }
+
+        // Unwrap inner paragraphs for phrasing containers (subtitle and badge)
+        if (directiveName === 'subtitle' || directiveName === 'badge') {
+          const phrasingChildren = [];
+          for (const child of node.children) {
+            if (child.type === 'paragraph') {
+              phrasingChildren.push(...child.children);
+            } else {
+              phrasingChildren.push(child);
+            }
+          }
+          node.children = phrasingChildren;
+        }
+
+        // Special handling for `:::card{title="..."}` feature cards
+        if (directiveName === 'card') {
+          const attrs = node.attributes || {};
+          const cardTitle = attrs.title || '';
+          const cardChildren = [];
+
+          if (cardTitle) {
+            cardChildren.push({
+              type: 'heading',
+              depth: 2,
+              data: {
+                hName: 'h2',
+                hProperties: { className: ['feature-card__title'] },
+              },
+              children: [{ type: 'text', value: cardTitle }],
+            });
+          }
+
+          for (const child of node.children) {
+            if (child.type === 'paragraph') {
+              child.data = child.data || {};
+              child.data.hProperties = child.data.hProperties || {};
+              child.data.hProperties.className = ['feature-card__description'];
+            }
+            cardChildren.push(child);
+          }
+
+          const contentWrapper = {
+            type: 'paragraph',
+            data: {
+              hName: 'div',
+              hProperties: { className: ['feature-card__content'] },
+            },
+            children: cardChildren,
+          };
+
+          node.children = [contentWrapper];
+          return;
         }
 
         // Special handling for `::::page` A4 printable document sheets

@@ -54,7 +54,7 @@ export const m3ForbidNativeElementsRule = [
   'error',
   {
     ...forbidElementsRule[1],
-    exemptFiles: ['A4Layout.astro', 'documents/'],
+    exemptFiles: ['documents/'],
   },
 ];
 
@@ -114,8 +114,14 @@ export const restrictedSyntaxRule = [
   },
   {
     selector:
-      ':matches(FunctionDeclaration, FunctionExpression, ArrowFunctionExpression) AssignmentPattern[left.name=/^(label|title|ariaLabel|placeholder|alt|helperText)$/] > Literal[value=/[a-zA-Z\u00C0-\u024F]/]',
+      'AssignmentPattern[left.name=/^(label|title|ariaLabel|placeholder|alt|helperText|description|pdfLabel)$/] > Literal[value=/[a-zA-Z\u00C0-\u024F]/]',
     message:
       'Hardcoded localized string detected in component default prop value. Make the prop required or provide translation through i18n.',
+  },
+  {
+    selector:
+      'VariableDeclarator[id.name=/^(label|title|ariaLabel|placeholder|alt|helperText|description|pdfLabel)$/] LogicalExpression[operator=/(?:\\|\\||\\?\\?)/] > Literal[value=/[a-zA-Z\u00C0-\u024F]/]',
+    message:
+      'Hardcoded localized string detected in fallback value. Use translation keys or an i18n dictionary (e.g. useTranslations()).',
   },
 ];

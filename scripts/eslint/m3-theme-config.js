@@ -91,6 +91,41 @@ export const astroOverridesConfig = {
         message:
           'Inline `sx` is forbidden in Astro templates. Place styles in clean CSS stylesheets.',
       },
+      {
+        selector: "JSXElement[openingElement.name.name='style']",
+        message:
+          'Raw `<style>` tags are forbidden in layout and template files. Place styles in clean CSS stylesheets and import them.',
+      },
+    ],
+  },
+};
+
+export const layoutOverridesConfig = {
+  files: ['src/layouts/**/*.{astro,jsx,tsx}', '**/*Layout*.astro'],
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      ...restrictedSyntaxRule.slice(1),
+      {
+        selector: "JSXElement[openingElement.name.name='div']",
+        message:
+          'Native `<div>` is forbidden in layout files (*Layout.astro, layouts/**). Use semantic HTML5 landmarks (<main>, <header>, <footer>, <section>, <article>, <aside>, <nav>) or component containers instead.',
+      },
+      {
+        selector: "JSXElement[openingElement.name.name='style']",
+        message:
+          'Raw `<style>` tags are forbidden in layout files (*Layout.astro, layouts/**). Place styles in clean CSS stylesheets and import them.',
+      },
+      {
+        selector: "JSXAttribute[name.name='style']",
+        message:
+          'Inline `style` attributes are forbidden in layout files. Place styles in clean CSS stylesheets.',
+      },
+      {
+        selector: "JSXAttribute[name.name='sx']",
+        message:
+          'Inline `sx` is forbidden in layout files. Place styles in clean CSS stylesheets.',
+      },
     ],
   },
 };

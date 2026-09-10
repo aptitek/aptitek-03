@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from '../i18n';
 import { PdfDownloadFab } from '../components/PdfDownloadFab.tsx';
 import '../styles/documents.css';
 
@@ -19,18 +20,18 @@ interface Props {
   };
 }
 
+const t = useTranslations();
 const frontmatter = Astro.props.frontmatter || {};
-const title = Astro.props.title || frontmatter.title || 'Document A4 — AptiTek';
+const title =
+  Astro.props.title || frontmatter.title || t.documents.a4DefaultTitle;
 const description =
   Astro.props.description ||
   frontmatter.description ||
-  'Document paginé au format A4 généré avec Astro, MDX et Playwright';
+  t.documents.a4DefaultDescription;
 const pdf = Astro.props.pdf ?? frontmatter.pdf ?? true;
 const pdfUrl = Astro.props.pdfUrl || frontmatter.pdfUrl;
 const pdfLabel =
-  Astro.props.pdfLabel ||
-  frontmatter.pdfLabel ||
-  'Télécharger le document en PDF';
+  Astro.props.pdfLabel || frontmatter.pdfLabel || t.documents.pdfDownloadLabel;
 const downloadFileName =
   Astro.props.downloadFileName || frontmatter.downloadFileName;
 
@@ -59,9 +60,9 @@ const autoFileName =
     />
   </head>
   <body>
-    <div class="a4-document-canvas">
+    <main class="a4-document-canvas">
       <slot />
-    </div>
+    </main>
 
     {pdf && (
       <PdfDownloadFab

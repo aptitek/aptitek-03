@@ -90,7 +90,6 @@ function createForbidNativeElementsRule() {
         'tests/',
         '.stories.',
         '.storybook/',
-        'A4Layout.astro',
         'documents/',
       ];
       const allExempt = [...defaultExempt, ...customExempt];

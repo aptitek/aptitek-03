@@ -31,6 +31,14 @@
   --color-eu-blue: var(--color-flag-eu-blue);
   --color-eu-gold: var(--color-flag-eu-gold);
 
+  /* Application Surface & Accent Color Semantic Tokens */
+  --color-bg: #0f172a;
+  --color-card: #1e293b;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-primary: #3b82f6;
+  --color-border: #334155;
+
   /* Named Role Color Tokens */
   --color-role-student: var(--color-solarized-green);
   --color-role-instructor: var(--color-solarized-blue);

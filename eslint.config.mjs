@@ -18,6 +18,7 @@ import {
   m3Config,
   tokensOverridesConfig,
   astroOverridesConfig,
+  layoutOverridesConfig,
 } from './scripts/eslint/m3-theme-config.js';
 import { cssConfigs } from './scripts/eslint/css-config.js';
 import { forbidElementsRule } from './scripts/eslint/restricted-rules.js';
@@ -92,6 +93,7 @@ export default tseslint.config(
   m3Config,
   tokensOverridesConfig,
   astroOverridesConfig,
+  layoutOverridesConfig,
 
   // Vitest unit & integration tests overrides
   {

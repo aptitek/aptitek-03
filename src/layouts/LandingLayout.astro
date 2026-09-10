@@ -1,0 +1,28 @@
+---
+import { useTranslations } from '../i18n';
+import Layout from './Layout.astro';
+import '../styles/features.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  frontmatter?: {
+    title?: string;
+    description?: string;
+  };
+}
+
+const t = useTranslations();
+const frontmatter = Astro.props.frontmatter || {};
+const title = Astro.props.title || frontmatter.title || t.common.siteTitle;
+const description =
+  Astro.props.description ||
+  frontmatter.description ||
+  t.common.siteDescription;
+---
+
+<Layout title={title} description={description}>
+  <main class="page">
+    <slot />
+  </main>
+</Layout>

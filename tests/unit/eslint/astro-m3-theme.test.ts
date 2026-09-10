@@ -221,4 +221,87 @@ import Chip from '@mui/material/Chip';
     );
     expect(elementErrors).toHaveLength(0);
   });
+
+  it('forbids raw <style> tags in layout files (src/layouts/**)', async () => {
+    const invalidLayout = `---
+---
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  body {
+    margin: 0;
+  }
+</style>
+`;
+
+    const results = await eslint.lintText(invalidLayout, {
+      filePath: 'src/layouts/CustomLayout.astro',
+    });
+
+    const styleErrors = results[0]?.messages.filter(
+      (m) =>
+        m.ruleId === 'no-restricted-syntax' &&
+        m.message.includes('Raw `<style>` tags are forbidden in layout files'),
+    );
+    expect(styleErrors.length).toBeGreaterThan(0);
+  });
+
+  it('forbids native <div> in layout files (src/layouts/**)', async () => {
+    const invalidLayout = `---
+---
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div class="a4-document-canvas">
+      <slot />
+    </div>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(invalidLayout, {
+      filePath: 'src/layouts/CustomLayout.astro',
+    });
+
+    const divErrors = results[0]?.messages.filter(
+      (m) =>
+        m.ruleId === 'no-restricted-syntax' &&
+        m.message.includes('Native `<div>` is forbidden in layout files'),
+    );
+    expect(divErrors.length).toBeGreaterThan(0);
+  });
+
+  it('permits semantic HTML5 landmarks such as <main> in layout files', async () => {
+    const validLayout = `---
+---
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <main class="a4-document-canvas">
+      <slot />
+    </main>
+  </body>
+</html>
+`;
+
+    const results = await eslint.lintText(validLayout, {
+      filePath: 'src/layouts/CustomLayout.astro',
+    });
+
+    const layoutErrors = results[0]?.messages.filter(
+      (m) =>
+        (m.ruleId === 'no-restricted-syntax' &&
+          m.message.includes('forbidden in layout files')) ||
+        m.ruleId === 'm3-theme/forbid-native-elements',
+    );
+    expect(layoutErrors).toHaveLength(0);
+  });
 });

@@ -1,12 +1,16 @@
 ---
+import { useTranslations } from '../i18n';
+import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
 }
 
+const t = useTranslations();
 const {
-  title = 'AptiTek — Modern Starter Template',
-  description = 'High performance web application template powered by Astro, React, and Storybook.',
+  title = t.layout.defaultTitle,
+  description = t.layout.defaultDescription,
 } = Astro.props;
 ---
 
@@ -25,36 +29,3 @@ const {
     <slot />
   </body>
 </html>
-
-<style is:global>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  :root {
-    --color-bg: #0f172a;
-    --color-card: #1e293b;
-    --color-text: #f8fafc;
-    --color-text-muted: #94a3b8;
-    --color-primary: #3b82f6;
-    --color-border: #334155;
-  }
-
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      sans-serif;
-    color: var(--color-text);
-    background-color: var(--color-bg);
-  }
-</style>
