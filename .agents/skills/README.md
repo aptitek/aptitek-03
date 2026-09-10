@@ -1,6 +1,6 @@
 # Curated Agent Skills — Astro Showcase / Site Vitrine Pro
 
-> **51 high-impact skills** selected specifically for crafting an elite, high-performance, conversion-focused showcase website (*site vitrine pro*) using **Astro 5, React 19, Vanilla CSS, and TypeScript**.
+> **53 high-impact skills** selected specifically for crafting an elite, high-performance, conversion-focused showcase website (*site vitrine pro*) using **Astro 5, React 19, Vanilla CSS, and TypeScript**.
 
 All skills are stored directly within `.agents/skills/<skill-name>/` with valid `SKILL.md` instructions.
 
@@ -22,6 +22,8 @@ All skills are stored directly within `.agents/skills/<skill-name>/` with valid 
 - [`frontend-design`](file://./frontend-design/SKILL.md) — Intentional frontend design engineering with strong aesthetic opinions.
 - [`frontend-ui-engineering`](file://./frontend-ui-engineering/SKILL.md) — Production-grade component architectures and responsive layouts.
 - [`high-end-visual-design`](file://./high-end-visual-design/SKILL.md) — Premium agency-grade aesthetics, spatial depth, and subtle elevation.
+- [`material-design-3-ui`](file://./material-design-3-ui/SKILL.md) — Design, review, and implement interfaces with Google Material Design 3, Material You tokens, and M3 Expressive.
+- [`material-3`](file://./material-3/SKILL.md) — Google Material Design 3 component architecture, theming, and layout specifications.
 - [`minimalist-ui`](file://./minimalist-ui/SKILL.md) — Editorial interfaces, warm monochrome palettes, crisp borders, and clean bento grids.
 - [`styleseed-design-review`](file://./styleseed-design-review/SKILL.md) — Concrete design rubric scoring UI to detect and eliminate "AI-generated" looks.
 - [`ui-motion`](file://./ui-motion/SKILL.md) — Motion seeds (spring, silk, snap, float, pulse) and transitions.
