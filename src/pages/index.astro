@@ -1,156 +1,99 @@
 ---
-import { Button } from '../components/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
 import Layout from '../layouts/Layout.astro';
+import { HeroActions } from '../components/HeroActions';
+import '../styles/features.css';
 ---
 
 <Layout title="AptiTek — Modern Web Application Template">
   <main class="page">
     <header class="hero">
-      <div class="badge">Production Ready Template</div>
+      <Chip
+        label="Production Ready Template"
+        variant="outlined"
+        color="primary"
+        className="hero-badge"
+      />
       <h1 class="title">AptiTek Modern Web Stack</h1>
       <p class="subtitle">
         Architecture modulaire haute performance combinant Astro, React,
         Storybook, Vitest, Playwright et Wireit.
       </p>
 
-      <div class="actions">
-        <a
-          href="https://docs.astro.build"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn--primary btn--md"
-        >
-          Documentation Astro
-        </a>
-        <Button client:load variant="secondary" size="md">
-          Composant React Actif
-        </Button>
-      </div>
+      <HeroActions
+        client:load
+        docsLabel="Documentation Astro"
+        sampleDocLabel="Exemple de Document A4"
+      />
     </header>
 
     <section class="features">
-      <div class="feature-card">
-        <h2>Architecture & Framework</h2>
-        <p>
-          Astro en mode statique haute vitesse couplé à React pour
-          l'interactivité dynamique ciblée.
-        </p>
-      </div>
+      <Card variant="outlined" className="feature-card">
+        <CardContent className="feature-card__content">
+          <Typography
+            variant="h6"
+            component="h2"
+            className="feature-card__title"
+          >
+            Architecture & Framework
+          </Typography>
+          <Typography variant="body2" className="feature-card__description">
+            Astro en mode statique haute vitesse couplé à React pour
+            l'interactivité dynamique ciblée.
+          </Typography>
+        </CardContent>
+      </Card>
 
-      <div class="feature-card">
-        <h2>Design System & Storybook</h2>
-        <p>
-          Développement isolé et tests visuels et d'interactions avec Storybook
-          et Vitest Browser.
-        </p>
-      </div>
+      <Card variant="outlined" className="feature-card">
+        <CardContent className="feature-card__content">
+          <Typography
+            variant="h6"
+            component="h2"
+            className="feature-card__title"
+          >
+            Design System & Storybook
+          </Typography>
+          <Typography variant="body2" className="feature-card__description">
+            Développement isolé et tests visuels et d'interactions avec
+            Storybook et Vitest Browser.
+          </Typography>
+        </CardContent>
+      </Card>
 
-      <div class="feature-card">
-        <h2>Tests E2E & Couverture</h2>
-        <p>
-          Playwright pour les parcours utilisateurs réels et Vitest V8 pour la
-          couverture de code intégrée.
-        </p>
-      </div>
+      <Card variant="outlined" className="feature-card">
+        <CardContent className="feature-card__content">
+          <Typography
+            variant="h6"
+            component="h2"
+            className="feature-card__title"
+          >
+            Tests E2E & Couverture
+          </Typography>
+          <Typography variant="body2" className="feature-card__description">
+            Playwright pour les parcours utilisateurs réels et Vitest V8 pour la
+            couverture de code intégrée.
+          </Typography>
+        </CardContent>
+      </Card>
 
-      <div class="feature-card">
-        <h2>Qualité & Pipeline Wireit</h2>
-        <p>
-          ESLint Flat Config, Prettier, Knip, TypeScript check et Sonar
-          optimisés par le cache Wireit.
-        </p>
-      </div>
+      <Card variant="outlined" className="feature-card">
+        <CardContent className="feature-card__content">
+          <Typography
+            variant="h6"
+            component="h2"
+            className="feature-card__title"
+          >
+            Qualité & Pipeline Wireit
+          </Typography>
+          <Typography variant="body2" className="feature-card__description">
+            ESLint Flat Config, Prettier, Knip, TypeScript check et Sonar
+            optimisés par le cache Wireit.
+          </Typography>
+        </CardContent>
+      </Card>
     </section>
   </main>
 </Layout>
-
-<style>
-  .page {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem;
-  }
-
-  .hero {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto 4rem auto;
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: #60a5fa;
-    background-color: rgba(59, 130, 246, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: 9999px;
-    margin-bottom: 1.5rem;
-  }
-
-  .title {
-    font-size: 2.75rem;
-    font-weight: 800;
-    line-height: 1.2;
-    margin: 0 0 1rem 0;
-    background: linear-gradient(to right, #ffffff, #94a3b8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .subtitle {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: var(--color-text-muted);
-    margin: 0 0 2rem 0;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .feature-card {
-    background-color: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-2px);
-    border-color: #475569;
-  }
-
-  .feature-card h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: #f1f5f9;
-  }
-
-  .feature-card p {
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  @media (max-width: 640px) {
-    .title {
-      font-size: 2rem;
-    }
-  }
-</style>

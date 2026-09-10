@@ -199,15 +199,9 @@ async function main() {
       // Emulate print media so @media print styles apply
       await page.emulateMedia({ media: 'print' });
 
-      // Target output file paths
-      const publicOutput = path.resolve(
-        projectRoot,
-        'public',
-        task.outputPdfPath,
-      );
+      // Target output file path (strictly inside dist/ to avoid polluting repository source tree)
       const distOutput = path.resolve(projectRoot, 'dist', task.outputPdfPath);
 
-      fs.mkdirSync(path.dirname(publicOutput), { recursive: true });
       fs.mkdirSync(path.dirname(distOutput), { recursive: true });
 
       // Generate PDF
@@ -218,12 +212,10 @@ async function main() {
         margin: { top: 0, right: 0, bottom: 0, left: 0 },
       });
 
-      fs.writeFileSync(publicOutput, pdfBuffer);
       fs.writeFileSync(distOutput, pdfBuffer);
 
       const sizeKb = (pdfBuffer.byteLength / 1024).toFixed(1);
-      console.log(`✅ Saved: ${publicOutput} (${sizeKb} KB)`);
-      console.log(`✅ Saved: ${distOutput}`);
+      console.log(`✅ Saved: ${distOutput} (${sizeKb} KB)`);
 
       await page.close();
     }

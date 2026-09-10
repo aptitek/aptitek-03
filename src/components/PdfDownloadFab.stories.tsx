@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PdfDownloadFab } from './PdfDownloadFab';
 
-const meta: Meta<typeof PdfDownloadFab> = {
+const meta = {
   title: 'Components/PdfDownloadFab',
   component: PdfDownloadFab,
   parameters: {
@@ -10,40 +10,49 @@ const meta: Meta<typeof PdfDownloadFab> = {
   tags: ['autodocs'],
   argTypes: {
     color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'error', 'info', 'warning'],
+      control: { type: 'select' },
+      options: [
+        'primary',
+        'secondary',
+        'default',
+        'success',
+        'error',
+        'info',
+        'warning',
+      ],
     },
     size: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['small', 'medium', 'large'],
     },
   },
-};
+  args: {
+    label: 'Télécharger le document en PDF',
+    pdfUrl: '/pdf/sample.pdf',
+    downloadFileName: 'sample-document.pdf',
+  },
+} satisfies Meta<typeof PdfDownloadFab>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
-    pdfUrl: '/pdf/sample-document.pdf',
-    label: 'Télécharger le document en PDF',
     color: 'primary',
     size: 'large',
   },
 };
 
-export const SecondaryColor: Story = {
+export const Secondary: Story = {
   args: {
-    label: 'Exporter la facture en PDF',
     color: 'secondary',
     size: 'medium',
   },
 };
 
-export const PrintFallback: Story = {
+export const SmallPrint: Story = {
   args: {
-    label: 'Imprimer directement la page',
-    color: 'info',
-    size: 'large',
+    size: 'small',
+    pdfUrl: undefined,
   },
 };

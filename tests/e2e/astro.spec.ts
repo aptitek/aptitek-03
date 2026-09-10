@@ -16,11 +16,11 @@ test.describe('Astro Template Application', () => {
     });
     await expect(heading).toBeVisible();
 
-    // Verify interactive React Button component
-    const reactButton = page.getByRole('button', {
-      name: 'Composant React Actif',
+    // Verify document sample link
+    const sampleLink = page.getByRole('link', {
+      name: 'Exemple de Document A4',
     });
-    await expect(reactButton).toBeVisible();
+    await expect(sampleLink).toBeVisible();
 
     // Verify external documentation link
     const docsLink = page.getByRole('link', { name: 'Documentation Astro' });

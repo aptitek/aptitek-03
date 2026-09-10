@@ -4,12 +4,23 @@ import eslintPluginAstro from 'eslint-plugin-astro';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginStorybook from 'eslint-plugin-storybook';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import i18next from 'eslint-plugin-i18next';
 import playwright from 'eslint-plugin-playwright';
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import globals from 'globals';
+
+import { a11yConfig } from './scripts/eslint/a11y-config.js';
+import {
+  i18nConfig,
+  i18nOverridesConfig,
+} from './scripts/eslint/i18n-config.js';
+import {
+  m3Config,
+  tokensOverridesConfig,
+  astroOverridesConfig,
+} from './scripts/eslint/m3-theme-config.js';
+import { cssConfigs } from './scripts/eslint/css-config.js';
+import { forbidElementsRule } from './scripts/eslint/restricted-rules.js';
 
 export default tseslint.config(
   {
@@ -26,8 +37,14 @@ export default tseslint.config(
       '.wireit/**',
     ],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  {
+    ...js.configs.recommended,
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
+  },
+  ...tseslint.configs.recommended.map((cfg) => ({
+    ...cfg,
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
+  })),
 
   // React & React Hooks configuration
   {
@@ -36,8 +53,13 @@ export default tseslint.config(
     ...eslintPluginReact.configs.flat['jsx-runtime'],
     settings: {
       react: {
-        version: 'detect',
+        version: '19.0',
       },
+    },
+    rules: {
+      ...eslintPluginReact.configs.flat.recommended.rules,
+      ...eslintPluginReact.configs.flat['jsx-runtime'].rules,
+      'react/forbid-elements': forbidElementsRule,
     },
     languageOptions: {
       globals: {
@@ -55,54 +77,89 @@ export default tseslint.config(
     },
   },
 
-  // React accessibility (a11y)
-  {
-    files: ['**/*.{jsx,tsx}'],
-    ...jsxA11y.flatConfigs.recommended,
-  },
+  // Strict Accessibility (a11y) - WCAG 2.1 AA
+  a11yConfig,
 
   // Astro recommended & Astro accessibility (a11y)
   ...eslintPluginAstro.configs['flat/recommended'],
   ...eslintPluginAstro.configs['flat/jsx-a11y-recommended'],
 
-  // Internationalization (i18n)
-  {
-    files: ['src/**/*.{jsx,tsx}'],
-    ...i18next.configs['flat/recommended'],
-    rules: {
-      'i18next/no-literal-string': 'warn',
-    },
-  },
-  {
-    files: [
-      'src/**/*.stories.{ts,tsx,js,jsx}',
-      '**/*.test.{ts,tsx,js,jsx}',
-      '**/*.spec.{ts,tsx,js,jsx}',
-    ],
-    rules: {
-      'i18next/no-literal-string': 'off',
-    },
-  },
+  // Strict Internationalization (i18n)
+  i18nConfig,
+  i18nOverridesConfig,
 
-  // Vitest unit & integration tests
+  // Material Design 3 Theming & Token Overrides
+  m3Config,
+  tokensOverridesConfig,
+  astroOverridesConfig,
+
+  // Vitest unit & integration tests overrides
   {
-    files: ['**/*.test.{ts,tsx,js,jsx}'],
+    files: ['**/*.test.{ts,tsx,js,jsx}', 'tests/unit/**/*.{ts,tsx,js,jsx}'],
     plugins: {
       vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
+      'no-restricted-syntax': 'off',
+      'm3-theme/no-static-role-colors': 'off',
+      'm3-theme/no-alpha-paper-surface': 'off',
+      'm3-theme/no-action-as-container-background': 'off',
+      'm3-theme/no-dark-mode-black-shadow': 'off',
+      'm3-theme/no-hardcoded-box-shadow': 'off',
+      'm3-theme/no-raw-svg-icons': 'off',
+      'm3-theme/enforce-rounded-icons': 'off',
+      'm3-theme/allowed-theme-colors': 'off',
+      'm3-theme/enforce-motion-tokens': 'off',
+      'm3-theme/enforce-shape-tokens': 'off',
+      'm3-theme/enforce-spacing-tokens': 'off',
+      'm3-theme/enforce-typography-tokens': 'off',
+      'm3-theme/enforce-elevation-levels': 'off',
+      'm3-theme/enforce-state-layers': 'off',
+      'm3-theme/enforce-minimum-touch-target': 'off',
     },
   },
 
   // Playwright E2E tests
   {
-    files: ['tests/**/*.{ts,js}', '**/*.spec.{ts,js}'],
+    files: ['tests/e2e/**/*.{ts,js}', '**/*.spec.{ts,js}'],
     ...playwright.configs['flat/recommended'],
   },
 
-  // Storybook stories
+  // Storybook stories & overrides
   ...eslintPluginStorybook.configs['flat/recommended'],
+  {
+    files: [
+      '**/*.stories.{ts,tsx,js,jsx}',
+      '**/*.stories.mdx',
+      '.storybook/**',
+      'stories/**',
+    ],
+    rules: {
+      'no-restricted-syntax': 'off',
+      'm3-theme/no-action-as-container-background': 'off',
+      'm3-theme/allowed-theme-colors': 'off',
+      'm3-theme/enforce-motion-tokens': 'off',
+      'm3-theme/enforce-shape-tokens': 'off',
+      'm3-theme/enforce-spacing-tokens': 'off',
+      'm3-theme/enforce-typography-tokens': 'off',
+      'm3-theme/enforce-elevation-levels': 'off',
+      'm3-theme/enforce-state-layers': 'off',
+      'm3-theme/enforce-minimum-touch-target': 'off',
+    },
+  },
+
+  // Scripts and config files
+  {
+    files: ['scripts/**', '*.config.{ts,js,mjs}', 'vitest.shims.d.ts'],
+    rules: {
+      'no-console': 'off',
+      'no-restricted-syntax': 'off',
+    },
+  },
+
+  // CSS Token Enforcement
+  ...cssConfigs,
 
   // Prettier must come last to override formatting rules
   eslintConfigPrettier,

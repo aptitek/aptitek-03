@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
@@ -13,10 +14,9 @@ export interface PdfDownloadFabProps {
   pdfUrl?: string;
 
   /**
-   * Tooltip and accessible aria-label.
-   * @default "Télécharger le document en PDF"
+   * Tooltip and accessible aria-label (must be provided via i18n/localized string).
    */
-  label?: string;
+  label: string;
 
   /**
    * MUI Fab color variant.
@@ -55,8 +55,8 @@ export interface PdfDownloadFabProps {
 }
 
 export function PdfDownloadFab({
+  label,
   pdfUrl,
-  label = 'Télécharger le document en PDF',
   color = 'primary',
   size = 'large',
   downloadFileName,
@@ -83,9 +83,9 @@ export function PdfDownloadFab({
   }, [pdfUrl, downloadFileName]);
 
   return (
-    <div
+    <Box
       className={`pdf-fab-container ${className}`.trim()}
-      style={{
+      sx={{
         position: 'fixed',
         bottom: '32px',
         right: '32px',
@@ -116,13 +116,6 @@ export function PdfDownloadFab({
           <PictureAsPdfRoundedIcon />
         </Fab>
       </Tooltip>
-      <style>{`
-        @media print {
-          .pdf-fab-container {
-            display: none !important;
-          }
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 }

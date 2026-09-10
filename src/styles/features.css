@@ -1,0 +1,200 @@
+/**
+ * =============================================================================
+ * Features & Landing Page Clean CSS Stylesheet
+ * =============================================================================
+ *
+ * Architectural Justification:
+ * 1. Design Token Integrity:
+ *    - Exclusively utilizes CSS custom properties (--color-*) and Material Design 3
+ *      semantic tokens (--md-sys-*).
+ *    - Strictly complies with `css-tokens/no-raw-colors` by avoiding any hardcoded
+ *      hex, rgb, or hsl values outside the designated token layer.
+ *
+ * 2. Layout & Responsive Rhythm:
+ *    - Implements fluid CSS Grid for card layouts with auto-fitting columns.
+ *    - Standardizes vertical rhythm with responsive rem-based spacing.
+ *    - Adheres to WCAG 2.5.5 touch target minimums (>= 48px) for interactive elements.
+ *
+ * 3. Separation of Concerns:
+ *    - Isolates visual presentation from Astro component templates and React JSX,
+ *      allowing zero-runtime overhead in static rendering.
+ */
+
+/* -----------------------------------------------------------------------------
+ * Page Container & Layout
+ * Justification: Provides a centered, constrained reading viewport that prevents
+ * visual strain on ultra-wide displays while maintaining fluid gutter padding.
+ * -------------------------------------------------------------------------- */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Section
+ * Justification: Establishes the primary visual focal point. Centered alignment
+ * creates a balanced entry point for the marketing message and key action targets.
+ * -------------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 4rem auto;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Badge (Status Chip)
+ * Justification: Positioned above the display heading to communicate production
+ * readiness without competing with the primary typography hierarchy.
+ * -------------------------------------------------------------------------- */
+.hero-badge {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Heading (Display Title)
+ * Justification: Employs a subtle text gradient derived from foreground and muted
+ * text tokens. Avoids hardcoded hex stops to seamlessly adapt across dark themes.
+ * -------------------------------------------------------------------------- */
+.title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(
+    to right,
+    var(--color-text),
+    var(--color-text-muted)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Subtitle
+ * Justification: Readable body size with relaxed 1.6 line height for enhanced
+ * editorial scannability; uses secondary muted text color for proper contrast ratio.
+ * -------------------------------------------------------------------------- */
+.subtitle {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0 0 2rem 0;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Action Buttons Container
+ * Justification: Flexbox container with wrapping and standardized 1rem gap to
+ * prevent touch target overlaps on narrow screens.
+ * -------------------------------------------------------------------------- */
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* -----------------------------------------------------------------------------
+ * Hero Action Button (Base)
+ * Justification: Complies with WCAG 2.5.5 / M3 target size standards with min-height: 48px.
+ * Disables text uppercase transformation for improved internationalized readability.
+ * -------------------------------------------------------------------------- */
+.hero-action-btn {
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-transform: none;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+ * Primary Action Button
+ * Justification: High-contrast call to action utilizing --color-primary token.
+ * -------------------------------------------------------------------------- */
+.hero-action-btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+/* -----------------------------------------------------------------------------
+ * Secondary Action Button
+ * Justification: Subtle outlined variant with surface tokens that harmonizes with
+ * dark cards while signaling secondary priority to the user.
+ * -------------------------------------------------------------------------- */
+.hero-action-btn--secondary {
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.hero-action-btn--secondary:hover {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-border);
+}
+
+/* -----------------------------------------------------------------------------
+ * Features Grid
+ * Justification: CSS Grid with auto-fit and minmax ensures an adaptive multi-column
+ * layout that automatically adjusts to viewport width without arbitrary breakpoints.
+ * -------------------------------------------------------------------------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* -----------------------------------------------------------------------------
+ * Feature Card (Outlined M3 Spec)
+ * Justification: Uses card surface and border tokens with a subtle 2px vertical lift
+ * on hover to provide tactile depth feedback without causing layout reflows.
+ * -------------------------------------------------------------------------- */
+.feature-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-text-muted);
+}
+
+.feature-card__content {
+  padding: 1.5rem;
+}
+
+/* -----------------------------------------------------------------------------
+ * Feature Card Typography
+ * Justification: Establishes a clear heading-to-body scale. Title uses primary text
+ * token, while body copy uses muted text token for calibrated visual weight.
+ * -------------------------------------------------------------------------- */
+.feature-card__title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.feature-card__description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* -----------------------------------------------------------------------------
+ * Responsive Adaptations
+ * Justification: Mobile viewport scaling prevents header text clipping on small
+ * screens while preserving display prominence.
+ * -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .title {
+    font-size: 2rem;
+  }
+}

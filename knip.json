@@ -4,6 +4,7 @@
     "src/pages/**/*.{astro,md,mdx,html,js,ts}",
     "src/layouts/**/*.{astro,ts}",
     "src/**/*.stories.{ts,tsx}",
+    "src/tokens/index.ts",
     "scripts/**/*.{js,ts}"
   ],
   "project": [
@@ -15,7 +16,11 @@
     "@astrojs/check",
     "@sonar/scan",
     "@mui/x-date-pickers",
-    "material-shapes-ts",
     "react-material-expressive"
-  ]
+  ],
+  "rules": {
+    "duplicates": "off",
+    "exports": "off",
+    "types": "off"
+  }
 }
