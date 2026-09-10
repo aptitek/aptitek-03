@@ -22,9 +22,10 @@ interface PdfTask {
  */
 function parseFrontmatter(content: string): Record<string, string | boolean> {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) return {};
+  const matchedGroup = match?.[1];
+  if (!matchedGroup) return {};
 
-  const lines = match[1].split('\n');
+  const lines = matchedGroup.split('\n');
   const result: Record<string, string | boolean> = {};
 
   for (const line of lines) {
@@ -72,7 +73,7 @@ function discoverPdfPages(dir: string): PdfTask[] {
         const content = fs.readFileSync(fullPath, 'utf-8');
         const frontmatter = parseFrontmatter(content);
 
-        if (frontmatter.pdf === true) {
+        if (frontmatter['pdf'] === true) {
           // Derive route from file path relative to src/pages
           const relPath = path.relative(pagesDir, fullPath);
           const cleanRoute =
@@ -83,14 +84,12 @@ function discoverPdfPages(dir: string): PdfTask[] {
               .replace(/^index$/, '');
 
           const targetPdf =
-            typeof frontmatter.pdfUrl === 'string'
-              ? frontmatter.pdfUrl.replace(/^\//, '')
+            typeof frontmatter['pdfUrl'] === 'string'
+              ? frontmatter['pdfUrl'].replace(/^\//, '')
               : `pdf${cleanRoute}.pdf`;
 
           const pdfTheme =
-            typeof frontmatter.pdfTheme === 'string'
-              ? frontmatter.pdfTheme
-              : 'light';
+            typeof frontmatter['pdfTheme'] === 'string' ? frontmatter['pdfTheme'] : 'light';
 
           tasks.push({
             sourceFile: fullPath,
@@ -103,32 +102,29 @@ function discoverPdfPages(dir: string): PdfTask[] {
     }
   }
 
-  if (fs.existsSync(dir)) {
-    scan(dir);
-  }
-
+  scan(dir);
   return tasks;
 }
 
 /**
- * Minimal static HTTP server to serve the dist directory
+ * Embedded static file server to host Astro dist build for Playwright
  */
 function startStaticServer(port: number): Promise<http.Server> {
   const mimeTypes: Record<string, string> = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
     '.js': 'application/javascript; charset=utf-8',
-    '.json': 'application/json',
     '.svg': 'image/svg+xml',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
+    '.webp': 'image/webp',
     '.woff2': 'font/woff2',
     '.woff': 'font/woff',
     '.ttf': 'font/ttf',
   };
 
   const server = http.createServer((req, res) => {
-    const reqPath = decodeURI((req.url || '/').split('?')[0]);
+    const reqPath = decodeURI((req.url ?? '/').split('?')[0] ?? '/');
 
     let filePath = path.join(distDir, reqPath);
 
@@ -137,10 +133,7 @@ function startStaticServer(port: number): Promise<http.Server> {
       filePath = path.join(filePath, 'index.html');
     } else if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
       filePath = filePath + '.html';
-    } else if (
-      !fs.existsSync(filePath) &&
-      fs.existsSync(path.join(filePath, 'index.html'))
-    ) {
+    } else if (!fs.existsSync(filePath) && fs.existsSync(path.join(filePath, 'index.html'))) {
       filePath = path.join(filePath, 'index.html');
     }
 

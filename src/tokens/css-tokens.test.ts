@@ -23,8 +23,7 @@ describe('CSS Design Tokens Linting', () => {
 
     const hexErrors = messages.filter(
       (msg) =>
-        msg.ruleId === 'css-tokens/no-raw-colors' &&
-        msg.message.includes('Hardcoded hex color'),
+        msg.ruleId === 'css-tokens/no-raw-colors' && msg.message.includes('Hardcoded hex color'),
     );
     const rgbaErrors = messages.filter(
       (msg) =>

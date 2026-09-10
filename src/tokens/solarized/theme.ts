@@ -6,12 +6,7 @@ import {
   resolveM3ShapeStyle,
 } from '../shapes.js';
 
-import {
-  ROLE_COLORS,
-  CELESTIAL_COLORS,
-  FLAG_COLORS,
-  NAMED_COLORS,
-} from './namedColors.js';
+import { ROLE_COLORS, CELESTIAL_COLORS, FLAG_COLORS, NAMED_COLORS } from './namedColors.js';
 export {
   ROLE_COLORS,
   CELESTIAL_COLORS,
@@ -38,26 +33,12 @@ import {
   createLightShadows,
   createDebugHighlightShadows,
 } from '../shadows.js';
-export {
-  createDarkHighlightShadows,
-  createLightShadows,
-  createDebugHighlightShadows,
-};
+export { createDarkHighlightShadows, createLightShadows, createDebugHighlightShadows };
 
-import {
-  M3_MOTION,
-  M3_SPRINGS,
-  M3_MOTION_DURATIONS,
-  M3_MOTION_EASINGS,
-} from '../motion.js';
+import { M3_MOTION, M3_SPRINGS, M3_MOTION_DURATIONS, M3_MOTION_EASINGS } from '../motion.js';
 export { M3_MOTION, M3_SPRINGS, M3_MOTION_DURATIONS, M3_MOTION_EASINGS };
 
-import {
-  M3_SPACINGS,
-  M3_SPACING_FRIENDSHIPS,
-  M3_STROKES,
-  M3_DIMENSIONS,
-} from '../spacing.js';
+import { M3_SPACINGS, M3_SPACING_FRIENDSHIPS, M3_STROKES, M3_DIMENSIONS } from '../spacing.js';
 export {
   M3_SPACINGS,
   M3_SPACING_STRINGS,
@@ -80,13 +61,7 @@ import {
   M3_TYPESCALE,
   type M3TypeScaleRole,
 } from '../typography.js';
-export {
-  FONT_FAMILIES,
-  RECURSIVE_PRESETS,
-  FONT_FEATURES,
-  M3_TYPESCALE,
-  type M3TypeScaleRole,
-};
+export { FONT_FAMILIES, RECURSIVE_PRESETS, FONT_FEATURES, M3_TYPESCALE, type M3TypeScaleRole };
 
 export interface ThemeRoleColors {
   student: string;

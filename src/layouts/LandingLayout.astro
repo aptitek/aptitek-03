@@ -17,10 +17,7 @@ interface Props {
 const t = useTranslations();
 const frontmatter = Astro.props.frontmatter || {};
 const title = Astro.props.title || frontmatter.title || t.common.siteTitle;
-const description =
-  Astro.props.description ||
-  frontmatter.description ||
-  t.common.siteDescription;
+const description = Astro.props.description || frontmatter.description || t.common.siteDescription;
 const theme = Astro.props.theme || frontmatter.theme || 'dark';
 ---
 

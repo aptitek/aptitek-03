@@ -1,8 +1,21 @@
 import { describe, it, expect } from 'vitest';
 import { ESLint } from 'eslint';
 
-describe('i18n and a11y Enforcement Rules', () => {
-  const eslint = new ESLint();
+describe('i18n and a11y Enforcement Rules', { timeout: 30000 }, () => {
+  const eslint = new ESLint({
+    overrideConfig: [
+      {
+        files: ['**/*.{jsx,tsx}'],
+        languageOptions: {
+          parserOptions: {
+            projectService: {
+              allowDefaultProject: ['src/components/*'],
+            },
+          },
+        },
+      },
+    ],
+  });
 
   describe('i18n (Strict Localization Guardrails)', () => {
     it('disallows hardcoded default strings on localized component props (e.g. label = "...")', async () => {
@@ -20,9 +33,7 @@ describe('i18n and a11y Enforcement Rules', () => {
       const restrictedErrors = results[0]?.messages.filter(
         (m) =>
           m.ruleId === 'no-restricted-syntax' &&
-          m.message.includes(
-            'Hardcoded localized string detected in component default prop value',
-          ),
+          m.message.includes('Hardcoded localized string detected in component default prop value'),
       );
 
       expect(restrictedErrors?.length).toBeGreaterThan(0);
@@ -101,9 +112,7 @@ const description =
       const restrictedErrors = results[0]?.messages.filter(
         (m) =>
           m.ruleId === 'no-restricted-syntax' &&
-          m.message.includes(
-            'Hardcoded localized string detected in fallback value',
-          ),
+          m.message.includes('Hardcoded localized string detected in fallback value'),
       );
 
       expect(restrictedErrors?.length).toBeGreaterThan(0);
@@ -125,9 +134,7 @@ const description = Astro.props.description || t.documents.a4DefaultDescription;
       const restrictedErrors = results[0]?.messages.filter(
         (m) =>
           m.ruleId === 'no-restricted-syntax' &&
-          m.message.includes(
-            'Hardcoded localized string detected in fallback value',
-          ),
+          m.message.includes('Hardcoded localized string detected in fallback value'),
       );
 
       expect(restrictedErrors).toHaveLength(0);
@@ -147,9 +154,7 @@ const description = Astro.props.description || t.documents.a4DefaultDescription;
         filePath: 'src/components/AvatarView.tsx',
       });
 
-      const altErrors = results[0]?.messages.filter(
-        (m) => m.ruleId === 'jsx-a11y/alt-text',
-      );
+      const altErrors = results[0]?.messages.filter((m) => m.ruleId === 'jsx-a11y/alt-text');
 
       expect(altErrors?.length).toBeGreaterThan(0);
     });

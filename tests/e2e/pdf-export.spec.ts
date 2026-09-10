@@ -1,9 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('A4 Document & MUI FAB PDF Pipeline', () => {
-  test('renders A4 sheets with MUI Floating Action Button', async ({
-    page,
-  }) => {
+  test('renders A4 sheets with MUI Floating Action Button', async ({ page }) => {
     await page.goto('/documents/sample-report');
 
     // Verify document title
@@ -11,10 +9,7 @@ test.describe('A4 Document & MUI FAB PDF Pipeline', () => {
 
     // Verify web theme is dark, while pdfTheme is light
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-    await expect(page.locator('html')).toHaveAttribute(
-      'data-pdf-theme',
-      'light',
-    );
+    await expect(page.locator('html')).toHaveAttribute('data-pdf-theme', 'light');
 
     // Verify A4 page sheets exist
     const sheets = page.locator('.a4-page-sheet');

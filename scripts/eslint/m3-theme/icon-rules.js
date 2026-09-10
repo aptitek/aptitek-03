@@ -53,10 +53,7 @@ export const iconRules = {
           }
         },
         CallExpression(node) {
-          if (
-            node.callee?.name === 'styled' &&
-            node.arguments?.[0]?.value === 'svg'
-          ) {
+          if (node.callee?.name === 'styled' && node.arguments?.[0]?.value === 'svg') {
             if (node.parent?.type === 'VariableDeclarator') {
               const varName = node.parent.id?.name || '';
               if (/(Icon|Glyph)$/i.test(varName)) {
@@ -70,10 +67,7 @@ export const iconRules = {
           }
         },
         VariableDeclarator(node) {
-          if (
-            node.id?.type === 'Identifier' &&
-            /(_ICON_PATH|_GLYPH_PATH)$/i.test(node.id.name)
-          ) {
+          if (node.id?.type === 'Identifier' && /(_ICON_PATH|_GLYPH_PATH)$/i.test(node.id.name)) {
             context.report({
               node,
               messageId: 'noCustomGlyphPath',
@@ -111,12 +105,8 @@ export const iconRules = {
       };
 
       function createIconFix(node, iconModule, suggested, fixer) {
-        const fixes = [
-          fixer.replaceText(node.source, `"@mui/icons-material/${suggested}"`),
-        ];
-        const defaultSpec = node.specifiers?.find(
-          (s) => s.type === 'ImportDefaultSpecifier',
-        );
+        const fixes = [fixer.replaceText(node.source, `"@mui/icons-material/${suggested}"`)];
+        const defaultSpec = node.specifiers?.find((s) => s.type === 'ImportDefaultSpecifier');
         if (defaultSpec && defaultSpec.local.name === `${iconModule}Icon`) {
           fixes.push(fixer.replaceText(defaultSpec.local, `${suggested}Icon`));
         }

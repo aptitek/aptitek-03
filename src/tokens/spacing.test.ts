@@ -95,12 +95,8 @@ describe('Material Design 3 Spacing & Layout Engine', () => {
   });
 
   it('exposes CSS custom properties for spacing and strokes', () => {
-    expect(M3_SPACING_CSS_VARIABLES.standard).toBe(
-      'var(--md-sys-spacing-standard)',
-    );
-    expect(M3_SPACING_CSS_VARIABLES.bestFriends).toBe(
-      'var(--spacing-friendship-best-friends)',
-    );
+    expect(M3_SPACING_CSS_VARIABLES.standard).toBe('var(--md-sys-spacing-standard)');
+    expect(M3_SPACING_CSS_VARIABLES.bestFriends).toBe('var(--spacing-friendship-best-friends)');
     expect(M3_STROKE_CSS_VARIABLES.thin).toBe('var(--md-sys-stroke-thin)');
     expect(M3_STROKE_CSS_VARIABLES.medium).toBe('var(--md-sys-stroke-medium)');
   });

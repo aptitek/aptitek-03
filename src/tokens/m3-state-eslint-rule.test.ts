@@ -33,10 +33,7 @@ const stateAllowedEslint = new ESLint({
         'm3-theme': m3ThemePlugin,
       },
       rules: {
-        'm3-theme/enforce-state-layers': [
-          'error',
-          { allowed: ['#ff0055', 'custom-hover-bg'] },
-        ],
+        'm3-theme/enforce-state-layers': ['error', { allowed: ['#ff0055', 'custom-hover-bg'] }],
       },
     },
   ],
@@ -96,9 +93,7 @@ export function ButtonLayer() {
         m.message.includes('Invalid interaction state opacity'),
     );
     expect(violations).toHaveLength(3);
-    expect(violations[0]?.message).toContain(
-      "Invalid interaction state opacity '0.5' for 'hover'",
-    );
+    expect(violations[0]?.message).toContain("Invalid interaction state opacity '0.5' for 'hover'");
     expect(violations[1]?.message).toContain(
       "Invalid interaction state opacity '0.25' for 'focus'",
     );
@@ -117,13 +112,9 @@ export const Action = styled("div")(({ theme }) => ({
     const [result] = await stateEslint.lintText(code, {
       filePath: 'app/components/molecules/StateCard/StateCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-state-layers',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-state-layers');
     expect(violations).toHaveLength(1);
-    expect(violations[0]?.message).toContain(
-      'alpha(theme.palette.primary.main, 0.4)',
-    );
+    expect(violations[0]?.message).toContain('alpha(theme.palette.primary.main, 0.4)');
   });
 
   it('permits exact MD3 state opacities, alpha(color, 0.08), action tokens, and CSS variables', async () => {
@@ -151,9 +142,7 @@ export const ProperStateComponent = styled(Box)(({ theme }) => ({
     const [result] = await stateEslint.lintText(code, {
       filePath: 'app/components/molecules/StateCard/StateCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-state-layers',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-state-layers');
     expect(violations).toHaveLength(0);
   });
 
@@ -165,9 +154,7 @@ export function CustomButton() {
     const [result] = await stateAllowedEslint.lintText(code, {
       filePath: 'app/components/molecules/StateCard/StateCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-state-layers',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-state-layers');
     expect(violations).toHaveLength(0);
   });
 });

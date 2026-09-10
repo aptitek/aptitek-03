@@ -34,10 +34,7 @@ const spacingDenseEslint = new ESLint({
         'm3-theme': m3ThemePlugin,
       },
       rules: {
-        'm3-theme/enforce-minimum-touch-target': [
-          'error',
-          { allowDense: true },
-        ],
+        'm3-theme/enforce-minimum-touch-target': ['error', { allowDense: true }],
       },
     },
   ],
@@ -55,14 +52,8 @@ const spacingAllowedEslint = new ESLint({
         'm3-theme': m3ThemePlugin,
       },
       rules: {
-        'm3-theme/enforce-spacing-tokens': [
-          'error',
-          { allowed: ['11px', '77'] },
-        ],
-        'm3-theme/enforce-minimum-touch-target': [
-          'error',
-          { allowed: ['24px', '32'] },
-        ],
+        'm3-theme/enforce-spacing-tokens': ['error', { allowed: ['11px', '77'] }],
+        'm3-theme/enforce-minimum-touch-target': ['error', { allowed: ['24px', '32'] }],
       },
     },
   ],
@@ -87,12 +78,8 @@ export function Card() {
     expect(violations).toHaveLength(3);
     expect(violations[0]?.message).toContain("Non-standard spacing value '11'");
     expect(violations[0]?.message).toContain('M3_SPACINGS.medium');
-    expect(violations[1]?.message).toContain(
-      "Non-standard spacing value '13px'",
-    );
-    expect(violations[2]?.message).toContain(
-      "Non-standard spacing value '35px'",
-    );
+    expect(violations[1]?.message).toContain("Non-standard spacing value '13px'");
+    expect(violations[2]?.message).toContain("Non-standard spacing value '35px'");
   });
 
   it('reports violations on non-standard stroke widths', async () => {

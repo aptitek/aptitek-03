@@ -132,8 +132,7 @@ export const layoutOverridesConfig = {
       },
       {
         selector: "JSXAttribute[name.name='sx']",
-        message:
-          'Inline `sx` is forbidden in layout files. Place styles in clean CSS stylesheets.',
+        message: 'Inline `sx` is forbidden in layout files. Place styles in clean CSS stylesheets.',
       },
     ],
   },

@@ -75,13 +75,11 @@ export const restrictedImportsRule = [
       },
       {
         name: '@tailwindcss/vite',
-        message:
-          'Tailwind CSS is disallowed in favor of Material Design 3 tokens.',
+        message: 'Tailwind CSS is disallowed in favor of Material Design 3 tokens.',
       },
       {
         name: 'tailwindcss',
-        message:
-          'Tailwind CSS is disallowed in favor of Material Design 3 tokens.',
+        message: 'Tailwind CSS is disallowed in favor of Material Design 3 tokens.',
       },
     ],
     patterns: [
@@ -107,8 +105,7 @@ export const restrictedSyntaxRule = [
       'Tailwind utility syntax is forbidden in className. Use MUI styled() primitives, theme-aware sx, or MD3 component tokens.',
   },
   {
-    selector:
-      "MemberExpression[object.property.name='palette'][property.name='mode']",
+    selector: "MemberExpression[object.property.name='palette'][property.name='mode']",
     message:
       "Do not read `theme.palette.mode` directly. Use CSS variables or MUI's `theme.applyStyles('dark', ...)` to avoid hydration mismatches and inline conditionals.",
   },

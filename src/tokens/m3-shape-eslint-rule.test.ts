@@ -34,18 +34,12 @@ export function Card() {
     const [result] = await shapeEslint.lintText(code, {
       filePath: 'app/components/molecules/TestCard/TestCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-shape-tokens',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-shape-tokens');
     expect(violations).toHaveLength(3);
     expect(violations[0]?.message).toContain("Non-standard corner radius '10'");
     expect(violations[0]?.message).toContain('M3_SHAPE_CORNERS.small');
-    expect(violations[1]?.message).toContain(
-      "Non-standard corner radius '14px'",
-    );
-    expect(violations[2]?.message).toContain(
-      "Non-standard corner radius '6px'",
-    );
+    expect(violations[1]?.message).toContain("Non-standard corner radius '14px'");
+    expect(violations[2]?.message).toContain("Non-standard corner radius '6px'");
     expect(violations[2]?.message).toContain('M3_SHAPE_CORNERS.small');
   });
 
@@ -56,13 +50,9 @@ export function Card() {
     const [result] = await shapeEslint.lintText(code, {
       filePath: 'app/components/molecules/TestCard/TestCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-shape-tokens',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-shape-tokens');
     expect(violations).toHaveLength(1);
-    expect(violations[0]?.message).toContain(
-      "Non-standard corner radius '10px'",
-    );
+    expect(violations[0]?.message).toContain("Non-standard corner radius '10px'");
   });
 
   it('reports dynamic import and require of material-shapes-ts outside tokens', async () => {
@@ -74,9 +64,7 @@ export function Card() {
     const [result] = await shapeEslint.lintText(code, {
       filePath: 'app/components/molecules/TestCard/TestCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-shape-tokens',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-shape-tokens');
     expect(violations).toHaveLength(2);
     expect(violations[0]?.message).toContain(
       "Direct import from 'material-shapes-ts' is forbidden",
@@ -104,9 +92,7 @@ export function Card() {
     const [result] = await shapeEslint.lintText(code, {
       filePath: 'app/components/molecules/TestCard/TestCard.tsx',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/enforce-shape-tokens',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/enforce-shape-tokens');
     expect(violations).toHaveLength(0);
   });
 });

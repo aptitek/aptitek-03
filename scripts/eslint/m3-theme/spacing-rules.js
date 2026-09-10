@@ -14,8 +14,7 @@ const APPROVED_SPACING_PIXELS = new Set([
 ]);
 
 const APPROVED_MUI_MULTIPLIERS = new Set([
-  0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10, 12, 15,
-  20,
+  0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10, 12, 15, 20,
 ]);
 
 const SVG_SHAPE_TAGS = new Set([
@@ -205,8 +204,7 @@ export const spacingRules = {
         if (val === undefined || val === null) return false;
         const str = String(val).trim();
         return (
-          allowedList.has(str) ||
-          Array.from(allowedList).some((pat) => pat && str.includes(pat))
+          allowedList.has(str) || Array.from(allowedList).some((pat) => pat && str.includes(pat))
         );
       }
 
@@ -344,8 +342,7 @@ export const spacingRules = {
               const num = parseFloat(m);
               const absNum = Math.abs(num);
               const isApproved =
-                APPROVED_SPACING_PIXELS.has(absNum) ||
-                APPROVED_MUI_MULTIPLIERS.has(absNum);
+                APPROVED_SPACING_PIXELS.has(absNum) || APPROVED_MUI_MULTIPLIERS.has(absNum);
               if (!isApproved && !isAllowed(m) && !isAllowed(num)) {
                 context.report({
                   node: reportNode,
@@ -478,9 +475,7 @@ export const spacingRules = {
         if (val === null || val === undefined) return false;
         const strVal = String(val).trim().toLowerCase();
         if (allowedList.has(strVal)) return true;
-        return Array.from(allowedList).some(
-          (pat) => pat && strVal.includes(pat),
-        );
+        return Array.from(allowedList).some((pat) => pat && strVal.includes(pat));
       }
 
       function extractDimensionNumber(node) {
@@ -510,9 +505,7 @@ export const spacingRules = {
 
           const num = extractDimensionNumber(prop.value);
           const rawText =
-            (context.sourceCode || context.getSourceCode?.())?.getText(
-              prop.value,
-            ) || String(num);
+            (context.sourceCode || context.getSourceCode?.())?.getText(prop.value) || String(num);
 
           if (isAllowed(rawText) || (num !== null && isAllowed(num))) continue;
 
@@ -556,8 +549,7 @@ export const spacingRules = {
         if (!arg) return null;
         if (arg.type === 'ObjectExpression') return arg;
         if (
-          (arg.type === 'ArrowFunctionExpression' ||
-            arg.type === 'FunctionExpression') &&
+          (arg.type === 'ArrowFunctionExpression' || arg.type === 'FunctionExpression') &&
           arg.body?.type === 'ObjectExpression'
         ) {
           return arg.body;
@@ -568,14 +560,10 @@ export const spacingRules = {
       function inspectStyledOrVariable(node) {
         if (node.type !== 'CallExpression') return;
         const callee = node.callee;
-        const isStyled =
-          callee?.name === 'styled' || callee?.callee?.name === 'styled';
+        const isStyled = callee?.name === 'styled' || callee?.callee?.name === 'styled';
         if (!isStyled) return;
 
-        const styledArg =
-          callee.name === 'styled'
-            ? node.arguments?.[0]
-            : callee.arguments?.[0];
+        const styledArg = callee.name === 'styled' ? node.arguments?.[0] : callee.arguments?.[0];
         const targetName = styledArg?.name || styledArg?.value || 'Component';
         if (
           !isInteractiveTag(targetName) &&
@@ -595,8 +583,7 @@ export const spacingRules = {
           if (isTokenOrTest) return;
           if (!isInteractiveElement(node)) return;
 
-          const tagName =
-            node.openingElement?.name?.name || 'InteractiveElement';
+          const tagName = node.openingElement?.name?.name || 'InteractiveElement';
 
           for (const attr of node.openingElement?.attributes || []) {
             if (attr.type === 'JSXAttribute') {

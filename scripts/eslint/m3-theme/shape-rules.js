@@ -4,9 +4,7 @@
  * Theme-agnostic with support for custom allowed values.
  */
 
-const APPROVED_CORNER_NUMBERS = new Set([
-  0, 4, 8, 12, 16, 20, 28, 32, 48, 9999,
-]);
+const APPROVED_CORNER_NUMBERS = new Set([0, 4, 8, 12, 16, 20, 28, 32, 48, 9999]);
 
 const APPROVED_CORNER_STRINGS = new Set([
   '0',
@@ -106,8 +104,7 @@ export const shapeRules = {
         if (val === undefined || val === null) return false;
         const str = String(val).trim();
         return (
-          allowedList.has(str) ||
-          Array.from(allowedList).some((pat) => pat && str.includes(pat))
+          allowedList.has(str) || Array.from(allowedList).some((pat) => pat && str.includes(pat))
         );
       }
 
@@ -232,10 +229,7 @@ export const shapeRules = {
 
         ImportExpression(node) {
           if (isTokenOrTest) return;
-          if (
-            node.source?.type === 'Literal' &&
-            node.source.value === 'material-shapes-ts'
-          ) {
+          if (node.source?.type === 'Literal' && node.source.value === 'material-shapes-ts') {
             context.report({
               node,
               messageId: 'noDirectMaterialShapesImport',

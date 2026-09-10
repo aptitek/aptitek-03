@@ -14,8 +14,7 @@ export const m3TooltipOverrides = {
     zIndex: 1500,
   },
   tooltip: ({ theme }: { theme: Theme }) => ({
-    backgroundColor:
-      theme.palette.surfaceContainerHighest || theme.palette.background.paper,
+    backgroundColor: theme.palette.surfaceContainerHighest || theme.palette.background.paper,
     color: theme.palette.text.primary,
     fontSize: '0.75rem',
     fontWeight: 500,
@@ -31,8 +30,7 @@ export const m3TooltipOverrides = {
     backdropFilter: 'blur(8px)',
   }),
   arrow: ({ theme }: { theme: Theme }) => ({
-    color:
-      theme.palette.surfaceContainerHighest || theme.palette.background.paper,
+    color: theme.palette.surfaceContainerHighest || theme.palette.background.paper,
   }),
 };
 
@@ -132,8 +130,7 @@ export const m3DataGridComponents = {
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
         '& .MuiDataGrid-columnHeaders': {
-          backgroundColor:
-            theme.palette.surfaceContainer || theme.palette.background.paper,
+          backgroundColor: theme.palette.surfaceContainer || theme.palette.background.paper,
           borderBottom: `1px solid ${theme.palette.divider}`,
           fontWeight: 700,
         },
@@ -154,8 +151,7 @@ export const m3DataGridComponents = {
         },
         '& .MuiDataGrid-footerContainer': {
           borderTop: `1px solid ${theme.palette.divider}`,
-          backgroundColor:
-            theme.palette.surfaceContainer || theme.palette.background.paper,
+          backgroundColor: theme.palette.surfaceContainer || theme.palette.background.paper,
         },
       }),
     },
@@ -223,8 +219,7 @@ export const m3SharedComponents = {
   MuiAvatar: {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }) => ({
-        backgroundColor:
-          theme.palette.surfaceContainerHigh || theme.palette.background.paper,
+        backgroundColor: theme.palette.surfaceContainerHigh || theme.palette.background.paper,
         color: theme.palette.text.primary,
       }),
     },
@@ -233,8 +228,7 @@ export const m3SharedComponents = {
     styleOverrides: {
       root: ({ theme }: { theme: Theme }) => ({
         borderRadius: M3_SHAPE_CORNERS.largeIncreased,
-        backgroundColor:
-          theme.palette.surfaceContainer || theme.palette.background.paper,
+        backgroundColor: theme.palette.surfaceContainer || theme.palette.background.paper,
         backgroundImage: 'none',
       }),
     },
@@ -243,8 +237,7 @@ export const m3SharedComponents = {
     styleOverrides: {
       paper: ({ theme }: { theme: Theme }) => ({
         borderRadius: M3_SHAPE_CORNERS.extraLargeIncreased,
-        backgroundColor:
-          theme.palette.surfaceContainerHigh || theme.palette.background.paper,
+        backgroundColor: theme.palette.surfaceContainerHigh || theme.palette.background.paper,
       }),
     },
   },

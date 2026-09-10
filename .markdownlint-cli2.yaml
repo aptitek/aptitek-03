@@ -3,6 +3,7 @@ globs:
   - '**/*.md'
 
 ignores:
+  - '**/*.mdx'
   - 'node_modules/'
   - 'dist/'
   - '.astro/'

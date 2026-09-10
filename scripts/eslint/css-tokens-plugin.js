@@ -35,9 +35,7 @@ export const cssTokensPlugin = {
       },
       create(context) {
         const options = context.options?.[0] || {};
-        const allowedPatterns = (options.allowed || []).map((c) =>
-          c.toLowerCase().trim(),
-        );
+        const allowedPatterns = (options.allowed || []).map((c) => c.toLowerCase().trim());
 
         return {
           Hash(node) {
@@ -103,9 +101,7 @@ export const cssTokensPlugin = {
         return {
           Declaration(node) {
             if (node.property?.toLowerCase() === 'font-family') {
-              const val = (
-                context.sourceCode?.getText(node.value) || ''
-              ).trim();
+              const val = (context.sourceCode?.getText(node.value) || '').trim();
               if (
                 val.includes('var(--font-family-') ||
                 val === 'inherit' ||
@@ -195,10 +191,8 @@ export const cssTokensPlugin = {
             } else if (node.name === 'import') {
               const isTailwind = node.prelude?.children?.some(
                 (child) =>
-                  (typeof child.value === 'string' &&
-                    child.value.includes('tailwind')) ||
-                  (typeof child.name === 'string' &&
-                    child.name.includes('tailwind')),
+                  (typeof child.value === 'string' && child.value.includes('tailwind')) ||
+                  (typeof child.name === 'string' && child.name.includes('tailwind')),
               );
               if (isTailwind) {
                 context.report({

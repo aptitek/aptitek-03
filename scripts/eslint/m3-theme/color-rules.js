@@ -3,19 +3,14 @@
  * Theme-agnostic color checks, dynamic role colors, alpha paper surfaces, and dark-mode elevation.
  */
 
-import {
-  hasBackdropFilter,
-  isAlphaPaperCall,
-  isInsideApplyStylesDark,
-} from './helpers.js';
+import { hasBackdropFilter, isAlphaPaperCall, isInsideApplyStylesDark } from './helpers.js';
 
 export const colorRules = {
   'allowed-theme-colors': {
     meta: {
       type: 'problem',
       docs: {
-        description:
-          'Enforce that raw colors match approved whitelist in eslint config.',
+        description: 'Enforce that raw colors match approved whitelist in eslint config.',
       },
       schema: [
         {
@@ -31,9 +26,7 @@ export const colorRules = {
     },
     create(context) {
       const options = context.options?.[0] || {};
-      const allowedPatterns = (options.allowed || []).map((c) =>
-        c.toLowerCase().trim(),
-      );
+      const allowedPatterns = (options.allowed || []).map((c) => c.toLowerCase().trim());
       const HEX_REGEX = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
       const FN_REGEX = /^(rgb|hsl)a?\s*\(/i;
 
@@ -100,10 +93,7 @@ export const colorRules = {
           }
         },
         Identifier(node) {
-          if (
-            node.name === 'ROLE_COLORS' ||
-            node.name === 'DEFAULT_ROLE_COLORS'
-          ) {
+          if (node.name === 'ROLE_COLORS' || node.name === 'DEFAULT_ROLE_COLORS') {
             const pType = node.parent?.type;
             if (
               pType !== 'ImportSpecifier' &&
@@ -141,8 +131,7 @@ export const colorRules = {
           const key = node.key?.name || node.key?.value;
           if (key !== 'backgroundColor' && key !== 'bgcolor') return;
           if (!isAlphaPaperCall(node.value)) return;
-          const parentObject =
-            node.parent?.type === 'ObjectExpression' ? node.parent : null;
+          const parentObject = node.parent?.type === 'ObjectExpression' ? node.parent : null;
           if (parentObject && !hasBackdropFilter(parentObject)) {
             context.report({ node, messageId: 'noAlphaPaper' });
           }
@@ -170,13 +159,8 @@ export const colorRules = {
           if (key !== 'boxShadow' && key !== 'filter') return;
           if (!isInsideApplyStylesDark(node)) return;
           const rawVal =
-            (context.sourceCode || context.getSourceCode?.())?.getText(
-              node.value,
-            ) || '';
-          if (
-            /rgba\(\s*0\s*,\s*0\s*,\s*0\s*,/i.test(rawVal) ||
-            /common\.black/i.test(rawVal)
-          ) {
+            (context.sourceCode || context.getSourceCode?.())?.getText(node.value) || '';
+          if (/rgba\(\s*0\s*,\s*0\s*,\s*0\s*,/i.test(rawVal) || /common\.black/i.test(rawVal)) {
             context.report({ node, messageId: 'noDarkBlackShadow' });
           }
         },

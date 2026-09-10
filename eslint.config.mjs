@@ -10,10 +10,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import globals from 'globals';
 
 import { a11yConfig } from './scripts/eslint/a11y-config.js';
-import {
-  i18nConfig,
-  i18nOverridesConfig,
-} from './scripts/eslint/i18n-config.js';
+import { i18nConfig, i18nOverridesConfig } from './scripts/eslint/i18n-config.js';
 import {
   m3Config,
   tokensOverridesConfig,
@@ -41,11 +38,62 @@ export default tseslint.config(
   {
     ...js.configs.recommended,
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
+    rules: {
+      // Cognitive complexity ceiling
+      complexity: ['error', 10],
+      'max-depth': ['error', 4],
+      'max-nested-callbacks': ['error', 3],
+      'max-params': ['error', 4],
+      'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-debugger': 'error',
+      'no-alert': 'error',
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'prefer-const': 'error',
+      'no-var': 'error',
+      eqeqeq: ['error', 'always'],
+      curly: ['error', 'all'],
+      'no-throw-literal': 'error',
+      'no-return-assign': ['error', 'always'],
+      'no-param-reassign': ['error', { props: true }],
+      'no-shadow': 'off', // Superseded by @typescript-eslint/no-shadow
+    },
   },
-  ...tseslint.configs.recommended.map((cfg) => ({
+  ...tseslint.configs.strictTypeChecked.map((cfg) => ({
     ...cfg,
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
   })),
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['.*.mjs', '.*.js'],
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'error',
+      '@typescript-eslint/no-unsafe-call': 'error',
+      '@typescript-eslint/no-unsafe-member-access': 'error',
+      '@typescript-eslint/no-unsafe-return': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/require-await': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+      '@typescript-eslint/no-shadow': 'error',
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+    },
+  },
 
   // React & React Hooks configuration
   {
@@ -104,6 +152,9 @@ export default tseslint.config(
     rules: {
       ...vitest.configs.recommended.rules,
       'no-restricted-syntax': 'off',
+      'max-nested-callbacks': ['error', 5],
+      'no-param-reassign': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
       'm3-theme/no-static-role-colors': 'off',
       'm3-theme/no-alpha-paper-surface': 'off',
       'm3-theme/no-action-as-container-background': 'off',
@@ -131,12 +182,7 @@ export default tseslint.config(
   // Storybook stories & overrides
   ...eslintPluginStorybook.configs['flat/recommended'],
   {
-    files: [
-      '**/*.stories.{ts,tsx,js,jsx}',
-      '**/*.stories.mdx',
-      '.storybook/**',
-      'stories/**',
-    ],
+    files: ['**/*.stories.{ts,tsx,js,jsx}', '**/*.stories.mdx', '.storybook/**', 'stories/**'],
     rules: {
       'no-restricted-syntax': 'off',
       'm3-theme/no-action-as-container-background': 'off',
@@ -157,6 +203,25 @@ export default tseslint.config(
     rules: {
       'no-console': 'off',
       'no-restricted-syntax': 'off',
+      complexity: 'off',
+      'max-params': 'off',
+      'max-nested-callbacks': 'off',
+      'no-param-reassign': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
+      '@typescript-eslint/prefer-optional-chain': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/restrict-plus-operands': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+      '@typescript-eslint/no-misused-spread': 'off',
+      '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
+      '@typescript-eslint/no-deprecated': 'off',
     },
   },
 

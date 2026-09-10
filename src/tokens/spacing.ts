@@ -204,9 +204,7 @@ export const M3_STROKE_CSS_VARIABLES = {
 /**
  * Resolves an approved spacing value to its CSS pixel string.
  */
-export function resolveM3Spacing(
-  token: M3SpacingToken | SpacingFriendship,
-): string {
+export function resolveM3Spacing(token: M3SpacingToken | SpacingFriendship): string {
   if (token in M3_SPACING_FRIENDSHIPS) {
     return `${M3_SPACING_FRIENDSHIPS[token as SpacingFriendship]}px`;
   }

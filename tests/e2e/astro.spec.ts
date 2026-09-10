@@ -1,9 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Astro Template Application', () => {
-  test('loads home page with expected title and hero content', async ({
-    page,
-  }) => {
+  test('loads home page with expected title and hero content', async ({ page }) => {
     await page.goto('/');
 
     // Verify document title

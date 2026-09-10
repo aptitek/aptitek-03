@@ -66,11 +66,7 @@ export const motionRules = {
         for (const prop of node.properties || []) {
           if (prop.type !== 'Property') continue;
           const key = prop.key?.name || prop.key?.value;
-          if (
-            key === 'type' &&
-            prop.value?.type === 'Literal' &&
-            prop.value.value === 'spring'
-          ) {
+          if (key === 'type' && prop.value?.type === 'Literal' && prop.value.value === 'spring') {
             hasTypeSpring = true;
           }
           if (
@@ -114,10 +110,7 @@ export const motionRules = {
           }
         }
 
-        if (
-          easeNode?.type === 'ArrayExpression' &&
-          easeNode.elements.length === 4
-        ) {
+        if (easeNode?.type === 'ArrayExpression' && easeNode.elements.length === 4) {
           const allNumbers = easeNode.elements.every(
             (el) => el?.type === 'Literal' && typeof el.value === 'number',
           );
@@ -138,10 +131,7 @@ export const motionRules = {
           typeof durationNode.value === 'number' &&
           !hasRepeat
         ) {
-          if (
-            !isAllowed(String(durationNode.value)) &&
-            !isAllowed('duration')
-          ) {
+          if (!isAllowed(String(durationNode.value)) && !isAllowed('duration')) {
             context.report({
               node: durationNode,
               messageId: 'noHardcodedDuration',

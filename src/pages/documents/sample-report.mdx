@@ -16,23 +16,22 @@ footerText: 'AptiTek © 2026 — Confidentiel'
 
 # Proposition Technique & Architecture Frontend
 
-:::subtitle Génération automatisée de documents A4 imprimables et interactifs
-avec MDX, Astro et Playwright. :::
+:::subtitle Génération automatisée de documents A4 imprimables et interactifs avec MDX, Astro et
+Playwright. :::
 
 ## 1. Contexte & Objectifs
 
-Ce document sert de référence pour la mise en place d'un système de publication
-"Web-to-Print" fondé sur les technologies web modernes. L'intégralité du contenu
-est rédigée en **MDX**, permettant l'incorporation de logique et de composants
-React au sein d'une structure Markdown lisible et maintenable.
+Ce document sert de référence pour la mise en place d'un système de publication "Web-to-Print" fondé
+sur les technologies web modernes. L'intégralité du contenu est rédigée en **MDX**, permettant
+l'incorporation de logique et de composants React au sein d'une structure Markdown lisible et
+maintenable.
 
 Le document bénéficie d'une double restitution :
 
-- **Sur le Web :** Affichage sous forme de feuilles A4 centrées sur un espace de
-  travail stylisé, avec contrôle interactif.
-- **En Impression / Export PDF :** Respect strict des dimensions A4 (210mm x
-  297mm), suppression des interfaces web parasites, et fidélité vectorielle
-  optimale via le moteur Chromium de Playwright.
+- **Sur le Web :** Affichage sous forme de feuilles A4 centrées sur un espace de travail stylisé,
+  avec contrôle interactif.
+- **En Impression / Export PDF :** Respect strict des dimensions A4 (210mm x 297mm), suppression des
+  interfaces web parasites, et fidélité vectorielle optimale via le moteur Chromium de Playwright.
 
 ## 2. Stack Technologique Retenue
 
@@ -43,23 +42,21 @@ Le document bénéficie d'une double restitution :
 | **Bouton d'Action** | Material UI (MUI Fab) | Bouton flottant ergonomique avec icône PDF    |
 | **Générateur PDF**  | Playwright Chromium   | Restitution vectorielle haute fidélité        |
 
-:::callout **Principe Clé :** Le bouton flottant MUI situé en bas à droite vous
-permet de télécharger directement le fichier PDF pré-compilé ou de déclencher
-l'impression standard du navigateur. ::: ::::
+:::callout **Principe Clé :** Le bouton flottant MUI situé en bas à droite vous permet de
+télécharger directement le fichier PDF pré-compilé ou de déclencher l'impression standard du
+navigateur. ::: ::::
 
 ::::page
 
 ## 3. Spécifications du Pipeline de Génération
 
-Le pipeline d'exportation repose sur l'outil d'automatisation **Playwright**.
-Lors du build statique du site, une tâche dédiée parcourt les pages déclarant le
-drapeau `pdf: true` :
+Le pipeline d'exportation repose sur l'outil d'automatisation **Playwright**. Lors du build statique
+du site, une tâche dédiée parcourt les pages déclarant le drapeau `pdf: true` :
 
 1. Lancement d'une instance headless de Chromium.
 2. Navigation vers l'URL rendue avec attente de l'état `networkidle`.
 3. Émulation du média d'impression (`media: 'print'`).
-4. Capture au format **A4** avec préservation intégrale des styles
-   d'arrière-plan.
+4. Capture au format **A4** avec préservation intégrale des styles d'arrière-plan.
 5. Écriture du fichier résultant dans le répertoire de distribution `dist/pdf/`.
 
 ## 4. Validation & Conformité

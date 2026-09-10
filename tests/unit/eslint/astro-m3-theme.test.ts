@@ -22,7 +22,7 @@ const activeColor = 'var(--md-sys-color-primary)';
 
     const m3Errors = results[0]?.messages.filter(
       (m) =>
-        m.ruleId?.startsWith('m3-theme/') ||
+        (m.ruleId?.startsWith('m3-theme/') ?? false) ||
         m.ruleId === 'no-restricted-imports' ||
         m.ruleId === 'no-restricted-syntax',
     );
@@ -44,9 +44,7 @@ const activeColor = 'var(--md-sys-color-primary)';
       filePath: 'src/components/InvalidSvg.astro',
     });
 
-    const svgErrors = results[0]?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/no-raw-svg-icons',
-    );
+    const svgErrors = results[0]?.messages.filter((m) => m.ruleId === 'm3-theme/no-raw-svg-icons');
     expect(svgErrors.length).toBeGreaterThan(0);
   });
 
@@ -101,9 +99,7 @@ import Card from '@mui/material/Card';
     const styleErrors = results[0]?.messages.filter(
       (m) =>
         m.ruleId === 'no-restricted-syntax' &&
-        m.message.includes(
-          'Inline `style` attributes are prohibited altogether',
-        ),
+        m.message.includes('Inline `style` attributes are prohibited altogether'),
     );
     expect(styleErrors.length).toBeGreaterThan(0);
   });
@@ -300,8 +296,7 @@ const { theme = 'dark' } = Astro.props;
 
     const layoutErrors = results[0]?.messages.filter(
       (m) =>
-        (m.ruleId === 'no-restricted-syntax' &&
-          m.message.includes('forbidden in layout files')) ||
+        (m.ruleId === 'no-restricted-syntax' && m.message.includes('forbidden in layout files')) ||
         m.ruleId === 'm3-theme/forbid-native-elements',
     );
     expect(layoutErrors).toHaveLength(0);

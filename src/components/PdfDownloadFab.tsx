@@ -12,7 +12,7 @@ export interface PdfDownloadFabProps {
    * If provided, clicking initiates a download of this file.
    * If omitted, clicking defaults to invoking window.print().
    */
-  pdfUrl?: string;
+  pdfUrl?: string | undefined;
 
   /**
    * Tooltip and accessible aria-label (must be provided via i18n/localized string).
@@ -24,14 +24,7 @@ export interface PdfDownloadFabProps {
    * @default "primary"
    */
   color?:
-    | 'primary'
-    | 'secondary'
-    | 'default'
-    | 'inherit'
-    | 'success'
-    | 'error'
-    | 'info'
-    | 'warning';
+    'primary' | 'secondary' | 'default' | 'inherit' | 'success' | 'error' | 'info' | 'warning';
 
   /**
    * MUI Fab size.
@@ -42,17 +35,17 @@ export interface PdfDownloadFabProps {
   /**
    * Download attribute filename when downloading static PDF.
    */
-  downloadFileName?: string;
+  downloadFileName?: string | undefined;
 
   /**
    * Optional custom MUI sx styling overrides.
    */
-  sx?: SxProps<Theme>;
+  sx?: SxProps<Theme> | undefined;
 
   /**
    * Custom CSS class name.
    */
-  className?: string;
+  className?: string | undefined;
 }
 
 export function PdfDownloadFab({
@@ -67,10 +60,10 @@ export function PdfDownloadFab({
   const handleClick = useCallback(() => {
     if (typeof window === 'undefined') return;
 
-    if (pdfUrl) {
+    if (pdfUrl !== undefined && pdfUrl !== '') {
       const link = document.createElement('a');
       link.href = pdfUrl;
-      if (downloadFileName) {
+      if (downloadFileName !== undefined && downloadFileName !== '') {
         link.download = downloadFileName;
       }
       link.target = '_blank';
@@ -82,6 +75,25 @@ export function PdfDownloadFab({
       window.print();
     }
   }, [pdfUrl, downloadFileName]);
+
+  const baseFabSx = {
+    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.28)',
+    transition:
+      'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+    '&:hover': {
+      transform: 'scale(1.06)',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+    },
+    '@media print': {
+      display: 'none !important',
+    },
+  };
+
+  const fabSx = (
+    sx !== undefined
+      ? [baseFabSx, ...(Array.isArray(sx) ? (sx as readonly object[]) : [sx])]
+      : baseFabSx
+  ) as SxProps<Theme>;
 
   return (
     <AppThemeProvider>
@@ -101,19 +113,7 @@ export function PdfDownloadFab({
             aria-label={label}
             onClick={handleClick}
             data-testid="pdf-download-fab"
-            sx={{
-              boxShadow: '0 6px 16px rgba(0, 0, 0, 0.28)',
-              transition:
-                'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-              '&:hover': {
-                transform: 'scale(1.06)',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-              },
-              '@media print': {
-                display: 'none !important',
-              },
-              ...sx,
-            }}
+            sx={fabSx}
           >
             <PictureAsPdfRoundedIcon />
           </Fab>

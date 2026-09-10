@@ -1,5 +1,5 @@
 export interface Transition {
-  type?: 'spring' | 'tween' | 'inertia' | string;
+  type?: 'spring' | 'tween' | 'inertia' | (string & {});
   stiffness?: number;
   damping?: number;
   mass?: number;
@@ -369,10 +369,7 @@ export const M3_MOTION = {
  * Accessibility Helper:
  * Wraps a transition with fallback for users who prefer reduced motion.
  */
-export function reducedMotionSafe(
-  transition: Transition,
-  shouldReduceMotion: boolean,
-): Transition {
+export function reducedMotionSafe(transition: Transition, shouldReduceMotion: boolean): Transition {
   if (!shouldReduceMotion) return transition;
   return {
     duration: M3_MOTION_DURATIONS.s.short3,

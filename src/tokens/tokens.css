@@ -135,22 +135,17 @@
 
   /* Font Families */
   --font-family-brand:
-    'Recursive', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    sans-serif;
-  --font-family-plain:
-    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    'Recursive', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-plain: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-code:
-    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, monospace;
+    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Recursive Variable Font Presets */
   --font-variation-casual: 'CASL' 1, 'MONO' 0, 'slnt' 0, 'CRSV' 0.5;
-  --font-variation-casual-bold:
-    'CASL' 1, 'MONO' 0, 'wght' 700, 'slnt' 0, 'CRSV' 0.5;
+  --font-variation-casual-bold: 'CASL' 1, 'MONO' 0, 'wght' 700, 'slnt' 0, 'CRSV' 0.5;
   --font-variation-casual-slanted: 'CASL' 1, 'MONO' 0, 'slnt' -15, 'CRSV' 1;
   --font-variation-linear: 'CASL' 0, 'MONO' 0, 'slnt' 0, 'CRSV' 0;
-  --font-variation-linear-bold:
-    'CASL' 0, 'MONO' 0, 'wght' 700, 'slnt' 0, 'CRSV' 0;
+  --font-variation-linear-bold: 'CASL' 0, 'MONO' 0, 'wght' 700, 'slnt' 0, 'CRSV' 0;
   --font-variation-linear-slanted: 'CASL' 0, 'MONO' 0, 'slnt' -15, 'CRSV' 0;
   --font-variation-mono: 'CASL' 0, 'MONO' 1, 'slnt' 0, 'CRSV' 0;
   --font-variation-casual-mono: 'CASL' 1, 'MONO' 1, 'slnt' 0, 'CRSV' 0.5;
@@ -205,14 +200,9 @@
   /* Material 3 Elevation Tokens - Light Mode */
   --md-sys-elevation-highlight: rgba(0, 0, 0, 0);
   --md-sys-elevation-level0: none;
-  --md-sys-elevation-level1:
-    0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --md-sys-elevation-level2:
-    0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --md-sys-elevation-level3:
-    0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-  --md-sys-elevation-level4:
-    0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.3);
-  --md-sys-elevation-level5:
-    0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-level1: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-level2: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-level3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-level4: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+  --md-sys-elevation-level5: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
 }

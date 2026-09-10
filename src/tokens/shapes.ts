@@ -9,13 +9,7 @@ import {
   type MorphAnimationOptions,
 } from 'material-shapes-ts';
 
-export {
-  MaterialShapes,
-  roundedPolygonToPath,
-  Morph,
-  morphToPath,
-  animateMorph,
-};
+export { MaterialShapes, roundedPolygonToPath, Morph, morphToPath, animateMorph };
 export type { RoundedPolygon, MorphAnimation, MorphAnimationOptions };
 
 export type ExpressiveShapeName =
@@ -299,11 +293,10 @@ export function resolveShapeStyle(
   customRadius?: number | string,
 ): ResolvedShapeStyle {
   if (customRadius !== undefined) {
-    const rad =
-      typeof customRadius === 'number' ? `${customRadius}px` : customRadius;
+    const rad = typeof customRadius === 'number' ? `${customRadius}px` : customRadius;
     return { borderRadius: rad };
   }
-  if (!shape) {
+  if (shape === undefined || shape === '') {
     return { borderRadius: M3_SHAPE_CORNER_STRINGS.medium };
   }
   if (typeof shape === 'number') {
@@ -311,7 +304,7 @@ export function resolveShapeStyle(
   }
 
   const expressiveDef = EXPRESSIVE_SHAPE_CATALOG[shape];
-  if (expressiveDef) {
+  if (expressiveDef !== undefined) {
     return {
       borderRadius: expressiveDef.borderRadius ?? '0px',
       clipPath: expressiveDef.clipPath,
@@ -320,7 +313,7 @@ export function resolveShapeStyle(
   }
 
   const scaleRad = SHAPE_SCALE_RADIUS_MAP[shape];
-  if (scaleRad) {
+  if (scaleRad !== undefined && scaleRad !== '') {
     return { borderRadius: scaleRad };
   }
 
@@ -329,7 +322,7 @@ export function resolveShapeStyle(
 
 export const resolveM3ShapeStyle = resolveShapeStyle;
 
-export type ChipShape = ExpressiveShapeName | string | number;
+export type ChipShape = ExpressiveShapeName | (string & {}) | number;
 
 export const CHIP_SHAPE_RADIUS_MAP: Record<string, string> = {
   // Standard scales
@@ -402,30 +395,30 @@ export const CHIP_SHAPE_RADIUS_MAP: Record<string, string> = {
 
 export const RECTANGULAR_CHIP_RADIUS_MAP = CHIP_SHAPE_RADIUS_MAP;
 
-export function resolveChipShape(shape?: ChipShape): ResolvedShapeStyle | null {
-  if (shape === undefined || shape === null) return null;
+function getChipStandardRadius(shape: ChipShape): string | undefined {
   if (typeof shape === 'number') {
-    return { borderRadius: `${shape}px` };
+    return `${shape}px`;
   }
-  const key = String(shape).toLowerCase().trim();
-  const rectangularRadius = CHIP_SHAPE_RADIUS_MAP[key];
-  if (rectangularRadius) {
-    return { borderRadius: rectangularRadius };
+  const key = shape.toLowerCase().trim();
+  return CHIP_SHAPE_RADIUS_MAP[key] ?? SHAPE_SCALE_RADIUS_MAP[key] ?? SHAPE_SCALE_RADIUS_MAP[shape];
+}
+
+export function resolveChipShape(shape?: ChipShape): ResolvedShapeStyle | null {
+  if (shape === undefined) return null;
+  const standardRadius = getChipStandardRadius(shape);
+  if (standardRadius !== undefined && standardRadius !== '') {
+    return { borderRadius: standardRadius };
   }
-  const expressiveDef =
-    EXPRESSIVE_SHAPE_CATALOG[shape] || EXPRESSIVE_SHAPE_CATALOG[key];
-  if (expressiveDef) {
+  const key = typeof shape === 'string' ? shape.toLowerCase().trim() : '';
+  const expressiveDef = EXPRESSIVE_SHAPE_CATALOG[shape] ?? EXPRESSIVE_SHAPE_CATALOG[key];
+  if (expressiveDef !== undefined) {
     return {
       borderRadius: expressiveDef.borderRadius ?? '0px',
       clipPath: expressiveDef.clipPath,
       pathData: expressiveDef.pathData,
     };
   }
-  const scaleRad = SHAPE_SCALE_RADIUS_MAP[key] || SHAPE_SCALE_RADIUS_MAP[shape];
-  if (scaleRad) {
-    return { borderRadius: scaleRad };
-  }
-  return { borderRadius: String(shape) };
+  return { borderRadius: typeof shape === 'string' ? shape : `${shape}px` };
 }
 
 export const getResolvedChipShape = resolveChipShape;
@@ -449,7 +442,7 @@ const COMPANY_INSTITUTION_ALIASES = new Set([
  * - all / fallback: "pill"
  */
 export function getInstitutionChipShape(type?: string | null): ChipShape {
-  const norm = (type || '').toLowerCase().trim();
+  const norm = (type ?? '').toLowerCase().trim();
   if (norm === 'all') return 'pill';
   if (COMPANY_INSTITUTION_ALIASES.has(norm)) {
     return 'semicircle';
@@ -472,34 +465,31 @@ export function getSegmentedChipShape(): ChipShape {
  * - admin: 9-sided cookie ("9-sided-cookie")
  */
 export function getRoleAvatarShape(role?: string | null): ExpressiveShapeName {
-  switch (role) {
-    case 'admin':
-      return '9-sided-cookie';
-    case 'instructor':
-      return 'ghost-ish';
-    case 'student':
-    default:
-      return 'pill';
+  if (role === 'admin') {
+    return '9-sided-cookie';
   }
+  if (role === 'instructor') {
+    return 'ghost-ish';
+  }
+  return 'pill';
 }
 
 // --- Centralized Shape Morphing Engine ---
 
 export type ExpressiveMorphOptions = MorphAnimationOptions;
 
-export function getExpressivePolygon(
-  shape: ExpressiveShapeName | string | RoundedPolygon,
-): RoundedPolygon {
-  if (typeof shape === 'object' && shape !== null) return shape;
-  const canonical =
-    typeof shape === 'string' ? ALIASES[shape] || shape : 'circle';
+export type ExpressiveShapeInput = ExpressiveShapeName | (string & {}) | RoundedPolygon;
+
+export function getExpressivePolygon(shape: ExpressiveShapeInput): RoundedPolygon {
+  if (typeof shape === 'object') return shape;
+  const canonical = typeof shape === 'string' ? (ALIASES[shape] ?? shape) : 'circle';
   const entry = RAW_SHAPE_ENTRIES.find(([k]) => k === canonical);
   return entry ? entry[2] : MaterialShapes.Circle;
 }
 
 export function getMorphPath(
-  from: ExpressiveShapeName | string | RoundedPolygon,
-  to: ExpressiveShapeName | string | RoundedPolygon,
+  from: ExpressiveShapeInput,
+  to: ExpressiveShapeInput,
   progress: number,
 ): string {
   const polyA = getExpressivePolygon(from);
@@ -509,8 +499,8 @@ export function getMorphPath(
 }
 
 export function animateExpressiveMorph(
-  from: ExpressiveShapeName | string | RoundedPolygon,
-  to: ExpressiveShapeName | string | RoundedPolygon,
+  from: ExpressiveShapeInput,
+  to: ExpressiveShapeInput,
   options: ExpressiveMorphOptions,
 ): MorphAnimation {
   const polyA = getExpressivePolygon(from);

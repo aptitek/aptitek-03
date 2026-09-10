@@ -60,19 +60,14 @@ export function Card() {
     });
     const violations = result?.messages.filter(
       (m) =>
-        m.ruleId === 'm3-theme/enforce-elevation-levels' &&
-        m.message.includes('Raw box-shadow'),
+        m.ruleId === 'm3-theme/enforce-elevation-levels' && m.message.includes('Raw box-shadow'),
     );
     expect(violations).toHaveLength(2);
-    expect(violations[0]?.message).toContain(
-      "Raw box-shadow '0 4px 12px rgba(0, 0, 0, 0.5)'",
-    );
+    expect(violations[0]?.message).toContain("Raw box-shadow '0 4px 12px rgba(0, 0, 0, 0.5)'");
     expect(violations[0]?.message).toContain(
       'MD3 uses tonal elevation and 5 strict elevation levels',
     );
-    expect(violations[1]?.message).toContain(
-      "Raw box-shadow '0px 2px 8px #000000'",
-    );
+    expect(violations[1]?.message).toContain("Raw box-shadow '0px 2px 8px #000000'");
   });
 
   it('reports legacy MUI elevation levels (> 5) on theme.shadows access and JSX elevation props', async () => {
@@ -92,9 +87,7 @@ export function PaperCard() {
     );
     expect(violations.length).toBeGreaterThanOrEqual(2);
     const shadowsViolation = violations.find((v) =>
-      v.message.includes(
-        'Elevation level 8 is not an approved MD3 elevation level',
-      ),
+      v.message.includes('Elevation level 8 is not an approved MD3 elevation level'),
     );
     const propViolation = violations.find((v) =>
       v.message.includes("Elevation level '12' exceeds MD3 elevation levels"),
@@ -117,14 +110,11 @@ export function Overlay() {
     });
     const violations = result?.messages.filter(
       (m) =>
-        m.ruleId === 'm3-theme/enforce-elevation-levels' &&
-        m.message.includes('Arbitrary z-index'),
+        m.ruleId === 'm3-theme/enforce-elevation-levels' && m.message.includes('Arbitrary z-index'),
     );
     expect(violations).toHaveLength(2);
     expect(violations[0]?.message).toContain("Arbitrary z-index '10' detected");
-    expect(violations[1]?.message).toContain(
-      "Arbitrary z-index '9999' detected",
-    );
+    expect(violations[1]?.message).toContain("Arbitrary z-index '9999' detected");
   });
 
   it('permits standard M3 elevation tokens, theme.shadows[0..5], highlight rings, and semantic z-index', async () => {
@@ -175,19 +165,15 @@ describe('m3-theme/no-arbitrary-z-index', () => {
   it('reports arbitrary z-index numbers while allowing whitelisted exceptions', async () => {
     const code = `export const style = { zIndex: 20 };`;
     const [result] = await elevationEslint.lintText(code, {
-      filePath:
-        'app/components/molecules/ElevationCard/ElevationCard.styles.ts',
+      filePath: 'app/components/molecules/ElevationCard/ElevationCard.styles.ts',
     });
-    const violations = result?.messages.filter(
-      (m) => m.ruleId === 'm3-theme/no-arbitrary-z-index',
-    );
+    const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/no-arbitrary-z-index');
     expect(violations).toHaveLength(1);
     expect(violations[0]?.message).toContain("Arbitrary z-index '20' detected");
 
     const allowedCode = `export const allowedStyle = { zIndex: 9999 };`;
     const [allowedResult] = await elevationAllowedEslint.lintText(allowedCode, {
-      filePath:
-        'app/components/molecules/ElevationCard/ElevationCard.styles.ts',
+      filePath: 'app/components/molecules/ElevationCard/ElevationCard.styles.ts',
     });
     const allowedViolations = allowedResult?.messages.filter(
       (m) => m.ruleId === 'm3-theme/no-arbitrary-z-index',

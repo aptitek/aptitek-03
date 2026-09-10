@@ -30,15 +30,7 @@ export const a11yConfig = {
     'jsx-a11y/control-has-associated-label': [
       'warn',
       {
-        ignoreElements: [
-          'audio',
-          'canvas',
-          'embed',
-          'input',
-          'textarea',
-          'tr',
-          'video',
-        ],
+        ignoreElements: ['audio', 'canvas', 'embed', 'input', 'textarea', 'tr', 'video'],
         ignoreRoles: [
           'grid',
           'listbox',

@@ -5,9 +5,9 @@
  * Prevents hardcoding of natural language copy in layouts and components.
  */
 
-export const DEFAULT_LOCALE = 'fr';
+const DEFAULT_LOCALE = 'fr';
 
-export const translations = {
+const translations = {
   fr: {
     common: {
       siteTitle: 'AptiTek — Modern Web Application Template',
@@ -21,8 +21,7 @@ export const translations = {
     },
     documents: {
       a4DefaultTitle: 'Document A4 — AptiTek',
-      a4DefaultDescription:
-        'Document paginé au format A4 généré avec Astro, MDX et Playwright',
+      a4DefaultDescription: 'Document paginé au format A4 généré avec Astro, MDX et Playwright',
       pdfDownloadLabel: 'Télécharger le document en PDF',
     },
   },
@@ -39,8 +38,7 @@ export const translations = {
     },
     documents: {
       a4DefaultTitle: 'A4 Document — AptiTek',
-      a4DefaultDescription:
-        'A4 paginated document generated with Astro, MDX, and Playwright',
+      a4DefaultDescription: 'A4 paginated document generated with Astro, MDX, and Playwright',
       pdfDownloadLabel: 'Download document as PDF',
     },
   },
@@ -52,5 +50,5 @@ export type SupportedLocale = keyof typeof translations;
  * Retrieves localized string dictionary for a given locale.
  */
 export function useTranslations(locale: SupportedLocale = DEFAULT_LOCALE) {
-  return translations[locale] || translations[DEFAULT_LOCALE];
+  return translations[locale];
 }

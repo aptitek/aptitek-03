@@ -27,8 +27,8 @@
     "test:stories": "wireit",
     "test:coverage": "wireit",
     "test:e2e": "wireit",
-    "format": "prettier --write --cache --cache-location node_modules/.cache/prettier/ .",
-    "format:check": "prettier --check --cache --cache-location node_modules/.cache/prettier/ .",
+    "format": "prettier --write --cache .",
+    "format:check": "prettier --check --cache .",
     "clean": "wireit",
     "prepare": "husky"
   },
@@ -102,7 +102,7 @@
       ]
     },
     "lint:prettier": {
-      "command": "prettier --check --cache --cache-location node_modules/.cache/prettier/ .",
+      "command": "prettier --check --cache .",
       "files": [
         "src/**/*",
         "tests/**/*",
@@ -124,12 +124,12 @@
       ]
     },
     "lint:typecheck": {
-      "command": "astro check",
+      "command": "astro check --tsconfig ./tsconfig.app.json",
       "files": [
         "src/**/*",
-        "tests/**/*",
         "astro.config.mjs",
         "tsconfig.json",
+        "tsconfig.app.json",
         "package.json"
       ]
     },
@@ -256,6 +256,7 @@
     "globals": "^17.12.0",
     "husky": "^9.1.7",
     "knip": "^6.35.1",
+    "lint-staged": "^17.5.0",
     "markdownlint-cli2": "^0.23.2",
     "playwright": "^1.63.0",
     "prettier": "^3.9.6",

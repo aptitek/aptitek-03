@@ -50,9 +50,12 @@ export function hexToRgb(hex: string): RgbColor {
   let b: number;
 
   if (cleanHex.length === 3 || cleanHex.length === 4) {
-    r = parseInt(cleanHex[0] + cleanHex[0], 16);
-    g = parseInt(cleanHex[1] + cleanHex[1], 16);
-    b = parseInt(cleanHex[2] + cleanHex[2], 16);
+    const c0 = cleanHex.charAt(0);
+    const c1 = cleanHex.charAt(1);
+    const c2 = cleanHex.charAt(2);
+    r = parseInt(c0 + c0, 16);
+    g = parseInt(c1 + c1, 16);
+    b = parseInt(c2 + c2, 16);
   } else if (cleanHex.length === 6 || cleanHex.length === 8) {
     r = parseInt(cleanHex.slice(0, 2), 16);
     g = parseInt(cleanHex.slice(2, 4), 16);
@@ -123,9 +126,7 @@ export function rgbToXyz(rgb: RgbColor): { x: number; y: number; z: number } {
 
 function fLab(t: number): number {
   const delta = 6 / 29;
-  return t > delta * delta * delta
-    ? Math.cbrt(t)
-    : t / (3 * delta * delta) + 4 / 29;
+  return t > delta * delta * delta ? Math.cbrt(t) : t / (3 * delta * delta) + 4 / 29;
 }
 
 /**
@@ -165,10 +166,7 @@ export function getLStar(color: string | RgbColor): number {
 /**
  * Returns absolute difference in CIELab lightness (|L*1 - L*2|).
  */
-export function getDeltaLStar(
-  color1: string | RgbColor,
-  color2: string | RgbColor,
-): number {
+export function getDeltaLStar(color1: string | RgbColor, color2: string | RgbColor): number {
   const l1 = getLStar(color1);
   const l2 = getLStar(color2);
   return Math.round(Math.abs(l1 - l2) * 100) / 100;
@@ -177,10 +175,7 @@ export function getDeltaLStar(
 /**
  * Computes CIE ΔE* 76 color difference between two colors.
  */
-export function getDeltaE(
-  color1: string | RgbColor,
-  color2: string | RgbColor,
-): number {
+export function getDeltaE(color1: string | RgbColor, color2: string | RgbColor): number {
   const lab1 = hexToLab(color1);
   const lab2 = hexToLab(color2);
 

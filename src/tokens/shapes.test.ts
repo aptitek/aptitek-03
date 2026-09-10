@@ -39,9 +39,7 @@ describe('Material Design 3 Shape Engine', () => {
 
   it('exposes CSS custom property variable strings for theme synchronization', () => {
     expect(M3_SHAPE_CSS_VARIABLES.none).toBe('var(--md-sys-shape-corner-none)');
-    expect(M3_SHAPE_CSS_VARIABLES.medium).toBe(
-      'var(--md-sys-shape-corner-medium)',
-    );
+    expect(M3_SHAPE_CSS_VARIABLES.medium).toBe('var(--md-sys-shape-corner-medium)');
     expect(M3_SHAPE_CSS_VARIABLES.largeIncreased).toBe(
       'var(--md-sys-shape-corner-large-increased)',
     );

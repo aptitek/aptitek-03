@@ -1,11 +1,6 @@
 import type { ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import {
-  getTheme,
-  type ThemeMode,
-  type SupportedTheme,
-  DEFAULT_THEME,
-} from '../tokens/theme.js';
+import { getTheme, type ThemeMode, type SupportedTheme, DEFAULT_THEME } from '../tokens/theme.js';
 
 export interface AppThemeProviderProps {
   theme?: SupportedTheme;

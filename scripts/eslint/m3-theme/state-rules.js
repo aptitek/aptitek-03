@@ -44,11 +44,7 @@ function getInteractionState(key) {
   if (typeof key !== 'string') return null;
   const lower = key.toLowerCase();
   if (lower.includes('dragged')) return 'dragged';
-  if (
-    lower.includes(':active') ||
-    lower.includes('pressed') ||
-    lower.includes('mui-active')
-  ) {
+  if (lower.includes(':active') || lower.includes('pressed') || lower.includes('mui-active')) {
     return 'pressed';
   }
   if (
@@ -58,23 +54,13 @@ function getInteractionState(key) {
   ) {
     return 'focus';
   }
-  if (
-    lower.includes(':hover') ||
-    lower.includes('mui-hovered') ||
-    lower === 'hover'
-  ) {
+  if (lower.includes(':hover') || lower.includes('mui-hovered') || lower === 'hover') {
     return 'hover';
   }
   return null;
 }
 
-const APPROVED_BG_KEYWORDS = new Set([
-  'transparent',
-  'inherit',
-  'initial',
-  'unset',
-  'none',
-]);
+const APPROVED_BG_KEYWORDS = new Set(['transparent', 'inherit', 'initial', 'unset', 'none']);
 
 export const stateRules = {
   'enforce-state-layers': {
@@ -116,9 +102,7 @@ export const stateRules = {
         if (val === null || val === undefined) return false;
         const strVal = String(val).trim().toLowerCase();
         if (allowedList.has(strVal)) return true;
-        return Array.from(allowedList).some(
-          (pat) => pat && strVal.includes(pat.toLowerCase()),
-        );
+        return Array.from(allowedList).some((pat) => pat && strVal.includes(pat.toLowerCase()));
       }
 
       function checkOpacity(valNode, reportNode, state) {
@@ -128,10 +112,7 @@ export const stateRules = {
         if (valNode.type === 'Literal') {
           const val = valNode.value;
           if (typeof val === 'number') {
-            if (
-              Math.abs(val - config.expectedOpacity) > 0.005 &&
-              !isAllowed(val)
-            ) {
+            if (Math.abs(val - config.expectedOpacity) > 0.005 && !isAllowed(val)) {
               context.report({
                 node: reportNode,
                 messageId: 'invalidStateOpacity',
@@ -140,23 +121,14 @@ export const stateRules = {
             }
           } else if (typeof val === 'string') {
             const trimmed = val.trim();
-            if (
-              trimmed === config.opacityString ||
-              trimmed.includes(config.cssVar)
-            ) {
+            if (trimmed === config.opacityString || trimmed.includes(config.cssVar)) {
               return;
             }
-            if (
-              APPROVED_BG_KEYWORDS.has(trimmed.toLowerCase()) ||
-              isAllowed(trimmed)
-            ) {
+            if (APPROVED_BG_KEYWORDS.has(trimmed.toLowerCase()) || isAllowed(trimmed)) {
               return;
             }
             const parsed = parseFloat(trimmed);
-            if (
-              !isNaN(parsed) &&
-              Math.abs(parsed - config.expectedOpacity) > 0.005
-            ) {
+            if (!isNaN(parsed) && Math.abs(parsed - config.expectedOpacity) > 0.005) {
               context.report({
                 node: reportNode,
                 messageId: 'invalidStateOpacity',
@@ -188,18 +160,14 @@ export const stateRules = {
           }
 
           // Allowed CSS variable
-          if (
-            val.includes(config.cssVar) ||
-            val.startsWith('var(--md-sys-state-')
-          ) {
+          if (val.includes(config.cssVar) || val.startsWith('var(--md-sys-state-')) {
             return;
           }
 
           // Check if rgba with correct opacity: e.g. rgba(..., 0.08)
-          const rgbaMatch =
-            /rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/i.exec(
-              val,
-            );
+          const rgbaMatch = /rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/i.exec(
+            val,
+          );
           if (rgbaMatch) {
             const alphaVal = parseFloat(rgbaMatch[1]);
             if (Math.abs(alphaVal - config.expectedOpacity) <= 0.005) return;
@@ -222,8 +190,7 @@ export const stateRules = {
         // 2. MemberExpression: theme.palette.action.hover, action.hover
         if (valNode.type === 'MemberExpression') {
           const prop = valNode.property?.name;
-          const parentProp =
-            valNode.object?.property?.name || valNode.object?.name;
+          const parentProp = valNode.object?.property?.name || valNode.object?.name;
           if (
             parentProp === 'action' &&
             (prop === config.actionToken ||
@@ -236,9 +203,8 @@ export const stateRules = {
           if (isAllowed(prop) || isAllowed(`${parentProp}.${prop}`)) return;
 
           const rawText =
-            (context.sourceCode || context.getSourceCode?.())?.getText(
-              valNode,
-            ) || `${parentProp}.${prop}`;
+            (context.sourceCode || context.getSourceCode?.())?.getText(valNode) ||
+            `${parentProp}.${prop}`;
 
           if (isAllowed(rawText)) return;
 
@@ -262,22 +228,14 @@ export const stateRules = {
           if (fnName !== 'alpha') return;
 
           const alphaArg = valNode.arguments?.[1];
-          if (
-            alphaArg?.type === 'Literal' &&
-            typeof alphaArg.value === 'number'
-          ) {
+          if (alphaArg?.type === 'Literal' && typeof alphaArg.value === 'number') {
             const alphaVal = alphaArg.value;
-            if (
-              Math.abs(alphaVal - config.expectedOpacity) <= 0.005 ||
-              isAllowed(alphaVal)
-            ) {
+            if (Math.abs(alphaVal - config.expectedOpacity) <= 0.005 || isAllowed(alphaVal)) {
               return;
             }
           }
           const rawText =
-            (context.sourceCode || context.getSourceCode?.())?.getText(
-              valNode,
-            ) || 'alpha(...)';
+            (context.sourceCode || context.getSourceCode?.())?.getText(valNode) || 'alpha(...)';
 
           if (isAllowed(rawText)) return;
 

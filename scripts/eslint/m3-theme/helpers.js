@@ -146,10 +146,7 @@ export function checkContainerBackground(node, allowedSet) {
       checkContainerBackground(node.alternate, allowedSet)
     );
   }
-  if (
-    node.type === 'ArrowFunctionExpression' ||
-    node.type === 'FunctionExpression'
-  ) {
+  if (node.type === 'ArrowFunctionExpression' || node.type === 'FunctionExpression') {
     return checkContainerBackground(node.body, allowedSet);
   }
   return null;
@@ -229,10 +226,7 @@ export function createContainerBackgroundRule() {
         if (isInteractiveContext(valueNode)) return;
         const result = checkContainerBackground(valueNode, allowedSet);
         if (result) {
-          const messageId =
-            result.type === 'action'
-              ? 'noActionBackground'
-              : 'unallowedBackground';
+          const messageId = result.type === 'action' ? 'noActionBackground' : 'unallowedBackground';
           context.report({
             node: reportNode,
             messageId,

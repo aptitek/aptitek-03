@@ -23,10 +23,7 @@ export function createEnforceThemeAttributeRule() {
     create(context) {
       return {
         JSXOpeningElement(node) {
-          if (
-            node.name?.type === 'JSXIdentifier' &&
-            node.name.name === 'html'
-          ) {
+          if (node.name?.type === 'JSXIdentifier' && node.name.name === 'html') {
             const hasDataTheme = node.attributes?.some(
               (attr) =>
                 attr.type === 'JSXAttribute' &&
@@ -52,8 +49,7 @@ export function createEnforceThemeStylesheetRule() {
     meta: {
       type: 'problem',
       docs: {
-        description:
-          'Enforce that layout files import a design system theme stylesheet.',
+        description: 'Enforce that layout files import a design system theme stylesheet.',
       },
       messages: {
         missingThemeStylesheet:
@@ -62,8 +58,7 @@ export function createEnforceThemeStylesheetRule() {
     },
     create(context) {
       const filename = context.filename || context.getFilename?.() || '';
-      const isLayout =
-        filename.includes('Layout') || filename.includes('layouts/');
+      const isLayout = filename.includes('Layout') || filename.includes('layouts/');
 
       if (!isLayout) return {};
 
@@ -101,8 +96,7 @@ export function createEnforceTypographyLinksRule() {
     meta: {
       type: 'problem',
       docs: {
-        description:
-          'Enforce that layout files link design system web fonts in <head>.',
+        description: 'Enforce that layout files link design system web fonts in <head>.',
       },
       messages: {
         missingTypographyLink:
@@ -111,8 +105,7 @@ export function createEnforceTypographyLinksRule() {
     },
     create(context) {
       const filename = context.filename || context.getFilename?.() || '';
-      const isLayout =
-        filename.includes('Layout') || filename.includes('layouts/');
+      const isLayout = filename.includes('Layout') || filename.includes('layouts/');
 
       if (!isLayout) return {};
 

@@ -83,9 +83,7 @@ export const elevationRules = {
         if (val === null || val === undefined) return false;
         const strVal = String(val).trim().toLowerCase();
         if (allowedList.has(strVal)) return true;
-        return Array.from(allowedList).some(
-          (pat) => pat && strVal.includes(pat.toLowerCase()),
-        );
+        return Array.from(allowedList).some((pat) => pat && strVal.includes(pat.toLowerCase()));
       }
 
       function checkShadowValue(node, reportNode) {
@@ -94,19 +92,13 @@ export const elevationRules = {
         if (node.type === 'Literal' && typeof node.value === 'string') {
           const val = node.value.trim();
           if (APPROVED_SHADOW_KEYWORDS.has(val.toLowerCase())) return;
-          if (
-            val.startsWith('var(--md-sys-elevation-') ||
-            val.startsWith('var(--elevation-')
-          ) {
+          if (val.startsWith('var(--md-sys-elevation-') || val.startsWith('var(--elevation-')) {
             return;
           }
           if (isAllowed(val)) return;
 
           // Check if perimeter highlight ring
-          if (
-            /^(0\s+0\s+0\s+1px|inset\s+0\s+0\s+0\s+1px)/i.test(val) ||
-            /1px\s+solid/i.test(val)
-          ) {
+          if (/^(0\s+0\s+0\s+1px|inset\s+0\s+0\s+0\s+1px)/i.test(val) || /1px\s+solid/i.test(val)) {
             return;
           }
 
@@ -266,17 +258,14 @@ export const elevationRules = {
         const strVal = String(val).trim().toLowerCase();
         return (
           allowedList.has(strVal) ||
-          Array.from(allowedList).some(
-            (pat) => pat && strVal.includes(pat.toLowerCase()),
-          )
+          Array.from(allowedList).some((pat) => pat && strVal.includes(pat.toLowerCase()))
         );
       }
 
       function checkZIndex(node, reportNode) {
         if (!node) return;
         if (node.type === 'Literal' && typeof node.value === 'number') {
-          if (APPROVED_Z_INDEX_NUMBERS.has(node.value) || isAllowed(node.value))
-            return;
+          if (APPROVED_Z_INDEX_NUMBERS.has(node.value) || isAllowed(node.value)) return;
           context.report({
             node: reportNode,
             messageId: 'noArbitraryZIndex',
@@ -296,11 +285,7 @@ export const elevationRules = {
           });
         } else if (node.type === 'Literal' && typeof node.value === 'string') {
           const val = node.value.trim().toLowerCase();
-          if (
-            APPROVED_Z_INDEX_KEYWORDS.has(val) ||
-            val.startsWith('var(--') ||
-            isAllowed(val)
-          ) {
+          if (APPROVED_Z_INDEX_KEYWORDS.has(val) || val.startsWith('var(--') || isAllowed(val)) {
             return;
           }
           context.report({

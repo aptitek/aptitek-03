@@ -24,10 +24,7 @@ function createM3Eslint(rules: Linter.RulesRecord) {
 describe('Material Design 3 ESLint Theming Rules', () => {
   const eslint = createM3Eslint({
     'm3-theme/no-action-as-container-background': 'error',
-    'm3-theme/allowed-theme-colors': [
-      'error',
-      { allowed: ['#00ff66', 'rgba(0, 0, 0,'] },
-    ],
+    'm3-theme/allowed-theme-colors': ['error', { allowed: ['#00ff66', 'rgba(0, 0, 0,'] }],
     'm3-theme/no-static-role-colors': 'error',
     'm3-theme/no-alpha-paper-surface': 'error',
     'm3-theme/no-dark-mode-black-shadow': 'error',
@@ -49,10 +46,7 @@ describe('Material Design 3 ESLint Theming Rules', () => {
   });
 
   const motionAllowedEslint = createM3Eslint({
-    'm3-theme/enforce-motion-tokens': [
-      'error',
-      { allowed: ['0.42', 'custom-special-physics'] },
-    ],
+    'm3-theme/enforce-motion-tokens': ['error', { allowed: ['0.42', 'custom-special-physics'] }],
   });
 
   const shapeAllowedEslint = createM3Eslint({
@@ -238,9 +232,7 @@ export function Card() { return <Box sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0
         (m) => m.ruleId === 'm3-theme/no-hardcoded-box-shadow',
       );
       expect(violations.length).toBeGreaterThan(0);
-      expect(violations[0]?.message).toContain(
-        'Hardcoded boxShadow string detected',
-      );
+      expect(violations[0]?.message).toContain('Hardcoded boxShadow string detected');
     });
   });
 
@@ -250,13 +242,9 @@ export function Card() { return <Box sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0
       const [result] = await eslint.lintText(code, {
         filePath: 'app/components/atoms/TestIcon/TestIcon.tsx',
       });
-      const violations = result?.messages.filter(
-        (m) => m.ruleId === 'm3-theme/no-raw-svg-icons',
-      );
+      const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/no-raw-svg-icons');
       expect(violations.length).toBeGreaterThan(0);
-      expect(violations[0]?.message).toContain(
-        'Raw <svg> elements for icons are forbidden',
-      );
+      expect(violations[0]?.message).toContain('Raw <svg> elements for icons are forbidden');
     });
 
     it('reports custom icon path variables (_ICON_PATH)', async () => {
@@ -264,13 +252,9 @@ export function Card() { return <Box sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0
       const [result] = await eslint.lintText(code, {
         filePath: 'app/components/molecules/SearchField/SearchField.styles.ts',
       });
-      const violations = result?.messages.filter(
-        (m) => m.ruleId === 'm3-theme/no-raw-svg-icons',
-      );
+      const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/no-raw-svg-icons');
       expect(violations.length).toBeGreaterThan(0);
-      expect(violations[0]?.message).toContain(
-        'Hardcoding custom SVG icon path glyphs',
-      );
+      expect(violations[0]?.message).toContain('Hardcoding custom SVG icon path glyphs');
     });
 
     it('permits raw svg in exempt graphic definitions like ShapeDefs', async () => {
@@ -278,9 +262,7 @@ export function Card() { return <Box sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0
       const [result] = await eslint.lintText(code, {
         filePath: 'app/components/atoms/Avatar/ShapeDefs.tsx',
       });
-      const violations = result?.messages.filter(
-        (m) => m.ruleId === 'm3-theme/no-raw-svg-icons',
-      );
+      const violations = result?.messages.filter((m) => m.ruleId === 'm3-theme/no-raw-svg-icons');
       expect(violations).toHaveLength(0);
     });
   });

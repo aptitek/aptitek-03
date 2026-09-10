@@ -10,27 +10,13 @@ import {
 describe('Material Design 3 Motion System', () => {
   describe('M3_MOTION_DURATIONS', () => {
     it('provides monotonic millisecond durations matching M3 spec', () => {
-      expect(M3_MOTION_DURATIONS.short1).toBeLessThan(
-        M3_MOTION_DURATIONS.short2,
-      );
-      expect(M3_MOTION_DURATIONS.short2).toBeLessThan(
-        M3_MOTION_DURATIONS.short3,
-      );
-      expect(M3_MOTION_DURATIONS.short3).toBeLessThan(
-        M3_MOTION_DURATIONS.short4,
-      );
-      expect(M3_MOTION_DURATIONS.short4).toBeLessThan(
-        M3_MOTION_DURATIONS.medium1,
-      );
-      expect(M3_MOTION_DURATIONS.medium1).toBeLessThan(
-        M3_MOTION_DURATIONS.medium2,
-      );
-      expect(M3_MOTION_DURATIONS.medium4).toBeLessThan(
-        M3_MOTION_DURATIONS.long1,
-      );
-      expect(M3_MOTION_DURATIONS.long4).toBeLessThan(
-        M3_MOTION_DURATIONS.extraLong1,
-      );
+      expect(M3_MOTION_DURATIONS.short1).toBeLessThan(M3_MOTION_DURATIONS.short2);
+      expect(M3_MOTION_DURATIONS.short2).toBeLessThan(M3_MOTION_DURATIONS.short3);
+      expect(M3_MOTION_DURATIONS.short3).toBeLessThan(M3_MOTION_DURATIONS.short4);
+      expect(M3_MOTION_DURATIONS.short4).toBeLessThan(M3_MOTION_DURATIONS.medium1);
+      expect(M3_MOTION_DURATIONS.medium1).toBeLessThan(M3_MOTION_DURATIONS.medium2);
+      expect(M3_MOTION_DURATIONS.medium4).toBeLessThan(M3_MOTION_DURATIONS.long1);
+      expect(M3_MOTION_DURATIONS.long4).toBeLessThan(M3_MOTION_DURATIONS.extraLong1);
       expect(M3_MOTION_DURATIONS.extraLong4).toBe(1000);
     });
 

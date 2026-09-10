@@ -38,12 +38,8 @@ export function Card() {
       (m) => m.ruleId === 'm3-theme/enforce-typography-tokens',
     );
     expect(violations).toHaveLength(2);
-    expect(violations[0]?.message).toContain(
-      'Non-standard fontFamily "monospace"',
-    );
-    expect(violations[1]?.message).toContain(
-      'Non-standard fontFamily "Courier New, monospace"',
-    );
+    expect(violations[0]?.message).toContain('Non-standard fontFamily "monospace"');
+    expect(violations[1]?.message).toContain('Non-standard fontFamily "Courier New, monospace"');
   });
 
   it('permits tokenized FONT_FAMILIES, theme properties, and CSS variables', async () => {
@@ -82,12 +78,8 @@ export function Card() {
       (m) => m.ruleId === 'm3-theme/enforce-typography-tokens',
     );
     expect(violations).toHaveLength(2);
-    expect(violations[0]?.message).toContain(
-      'Non-standard fontVariationSettings',
-    );
-    expect(violations[1]?.message).toContain(
-      'Non-standard fontVariationSettings',
-    );
+    expect(violations[0]?.message).toContain('Non-standard fontVariationSettings');
+    expect(violations[1]?.message).toContain('Non-standard fontVariationSettings');
   });
 
   it('permits tokenized RECURSIVE_PRESETS and formatFontVariation', async () => {
@@ -129,14 +121,8 @@ export function Card() {
       (m) => m.ruleId === 'm3-theme/enforce-typography-tokens',
     );
     expect(violations).toHaveLength(3);
-    expect(violations[0]?.message).toContain(
-      'Non-standard fontSize 19 detected',
-    );
-    expect(violations[1]?.message).toContain(
-      'Non-standard fontSize "17px" detected',
-    );
-    expect(violations[2]?.message).toContain(
-      'Non-standard fontSize "1.17rem" detected',
-    );
+    expect(violations[0]?.message).toContain('Non-standard fontSize 19 detected');
+    expect(violations[1]?.message).toContain('Non-standard fontSize "17px" detected');
+    expect(violations[2]?.message).toContain('Non-standard fontSize "1.17rem" detected');
   });
 });

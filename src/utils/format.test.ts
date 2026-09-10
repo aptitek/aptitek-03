@@ -19,9 +19,7 @@ describe('format utilities', () => {
     });
 
     it('truncates and adds ellipsis when exceeding limit', () => {
-      expect(truncate('Hello world this is a long text', 11)).toBe(
-        'Hello world...',
-      );
+      expect(truncate('Hello world this is a long text', 11)).toBe('Hello world...');
     });
   });
 

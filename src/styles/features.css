@@ -76,11 +76,7 @@
   font-weight: 800;
   line-height: 1.2;
   margin: 0 0 1rem 0;
-  background: linear-gradient(
-    to right,
-    var(--color-text),
-    var(--color-text-muted)
-  );
+  background: linear-gradient(to right, var(--color-text), var(--color-text-muted));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

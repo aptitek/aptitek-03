@@ -5,11 +5,7 @@
  * (e.g. Solarized, Material, Nord, Dracula, Catppuccin, etc.) with Solarized as
  * the default active theme.
  */
-import {
-  solarizedTheme,
-  getThemeByMode,
-  type ThemeMode,
-} from './solarized/theme.js';
+import { solarizedTheme, getThemeByMode, type ThemeMode } from './solarized/theme.js';
 
 export * from './solarized/theme.js';
 
@@ -46,7 +42,7 @@ export function getTheme(options?: ThemeSelectionOptions | ThemeMode) {
   }
   const themeName: SupportedTheme = options?.theme ?? DEFAULT_THEME;
   const mode: ThemeMode = options?.mode ?? 'dark';
-  const selectedTheme = THEMES[themeName] ?? THEMES[DEFAULT_THEME];
+  const selectedTheme = THEMES[themeName];
   if (mode === 'light') return selectedTheme.light;
   if (mode === 'debug') return selectedTheme.debug;
   return selectedTheme.dark;

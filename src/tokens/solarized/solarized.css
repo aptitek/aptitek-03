@@ -77,9 +77,7 @@
   --md-sys-color-surface-tint: var(--color-solarized-blue);
   --md-sys-color-on-primary: var(--color-solarized-base03); /* #002b36 */
   --md-sys-color-primary-container: var(--color-solarized-base02); /* #073642 */
-  --md-sys-color-on-primary-container: var(
-    --color-solarized-base0
-  ); /* #839496 */
+  --md-sys-color-on-primary-container: var(--color-solarized-base0); /* #839496 */
 
   --md-sys-color-secondary: var(--color-solarized-cyan); /* #2aa198 */
   --md-sys-color-on-secondary: var(--color-solarized-base03);
@@ -128,9 +126,7 @@
   --md-sys-color-surface-tint: var(--color-solarized-blue);
   --md-sys-color-on-primary: var(--color-solarized-base3); /* #fdf6e3 */
   --md-sys-color-primary-container: var(--color-solarized-base2); /* #eee8d5 */
-  --md-sys-color-on-primary-container: var(
-    --color-solarized-base03
-  ); /* #002b36 */
+  --md-sys-color-on-primary-container: var(--color-solarized-base03); /* #002b36 */
 
   --md-sys-color-secondary: var(--color-solarized-magenta); /* #d33682 */
   --md-sys-color-on-secondary: var(--color-solarized-base3);

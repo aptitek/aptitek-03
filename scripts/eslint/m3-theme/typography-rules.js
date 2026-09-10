@@ -30,8 +30,7 @@ const DEFAULT_APPROVED_FONT_FAMILIES = new Set([
 ]);
 
 const APPROVED_FONT_SIZE_PIXELS = new Set([
-  8, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 45, 48,
-  57, 64,
+  8, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 45, 48, 57, 64,
 ]);
 
 const APPROVED_FONT_SIZE_REMS = new Set([
@@ -273,9 +272,7 @@ export const typographyRules = {
 
           const normalized = attrName.toLowerCase();
           const attrVal =
-            node.value?.type === 'JSXExpressionContainer'
-              ? node.value.expression
-              : node.value;
+            node.value?.type === 'JSXExpressionContainer' ? node.value.expression : node.value;
 
           if (!attrVal) return;
 

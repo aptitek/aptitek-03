@@ -17,12 +17,7 @@ export const cssConfigs = [
     },
   },
   {
-    files: [
-      'src/tokens/**',
-      '**/tokens/**',
-      '**/*token*.css',
-      '**/*theme*.css',
-    ],
+    files: ['src/tokens/**', '**/tokens/**', '**/*token*.css', '**/*theme*.css'],
     rules: {
       'css-tokens/no-raw-colors': 'off',
       'css-tokens/no-raw-font-family': 'off',

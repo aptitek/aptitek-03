@@ -26,26 +26,20 @@ interface Props {
 
 const t = useTranslations();
 const frontmatter = Astro.props.frontmatter || {};
-const title =
-  Astro.props.title || frontmatter.title || t.documents.a4DefaultTitle;
+const title = Astro.props.title || frontmatter.title || t.documents.a4DefaultTitle;
 const description =
-  Astro.props.description ||
-  frontmatter.description ||
-  t.documents.a4DefaultDescription;
+  Astro.props.description || frontmatter.description || t.documents.a4DefaultDescription;
 const theme = Astro.props.theme || frontmatter.theme || 'dark';
 const pdfTheme = Astro.props.pdfTheme || frontmatter.pdfTheme || 'light';
 const pdf = Astro.props.pdf ?? frontmatter.pdf ?? true;
 const pdfUrl = Astro.props.pdfUrl || frontmatter.pdfUrl;
-const pdfLabel =
-  Astro.props.pdfLabel || frontmatter.pdfLabel || t.documents.pdfDownloadLabel;
-const downloadFileName =
-  Astro.props.downloadFileName || frontmatter.downloadFileName;
+const pdfLabel = Astro.props.pdfLabel || frontmatter.pdfLabel || t.documents.pdfDownloadLabel;
+const downloadFileName = Astro.props.downloadFileName || frontmatter.downloadFileName;
 
 // Auto-derive PDF url if not explicitly passed
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const autoPdfUrl = pdfUrl || `/pdf${currentPath}.pdf`;
-const autoFileName =
-  downloadFileName || `${currentPath.split('/').pop() || 'document'}.pdf`;
+const autoFileName = downloadFileName || `${currentPath.split('/').pop() || 'document'}.pdf`;
 ---
 
 <!doctype html>

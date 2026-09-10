@@ -10,8 +10,7 @@
  */
 
 export const FONT_FAMILIES = {
-  brand:
-    '"Recursive", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  brand: '"Recursive", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   mono: '"Recursive", "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   display: '"Recursive", sans-serif',
   mrz: '"OCR-B", "Recursive", "Courier New", Courier, monospace',
@@ -311,9 +310,7 @@ export function resolveM3Typography(
 } {
   const token = M3_TYPESCALE[role];
   const family =
-    variation === 'mono' || variation === 'casualMono'
-      ? FONT_FAMILIES.mono
-      : FONT_FAMILIES.brand;
+    variation === 'mono' || variation === 'casualMono' ? FONT_FAMILIES.mono : FONT_FAMILIES.brand;
   const variationSetting = RECURSIVE_PRESETS[variation];
 
   return {
@@ -327,8 +324,7 @@ export function resolveM3Typography(
 }
 
 export const APPROVED_FONT_SIZE_PIXELS = new Set([
-  8, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 45, 48,
-  57, 64,
+  8, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 45, 48, 57, 64,
 ]);
 
 export const APPROVED_FONT_SIZE_REMS = new Set([

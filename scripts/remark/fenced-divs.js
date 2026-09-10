@@ -102,12 +102,9 @@ export function remarkFencedDivsPlugin() {
     let autoPageNumber = 0;
     let hasInjectedHeroActions = false;
     const filePath = file.path || file.history?.[0] || 'document';
-    const frontmatter =
-      file.data?.astro?.frontmatter || file.data?.frontmatter || {};
-    const defaultHeaderTitle =
-      frontmatter.headerTitle || 'AptiTek Architecture & Conseil';
-    const defaultFooterText =
-      frontmatter.footerText || 'AptiTek © 2026 — Confidentiel';
+    const frontmatter = file.data?.astro?.frontmatter || file.data?.frontmatter || {};
+    const defaultHeaderTitle = frontmatter.headerTitle || 'AptiTek Architecture & Conseil';
+    const defaultFooterText = frontmatter.footerText || 'AptiTek © 2026 — Confidentiel';
     const totalPages = frontmatter.totalPages;
 
     visit(tree, (node) => {
@@ -131,8 +128,7 @@ export function remarkFencedDivsPlugin() {
 
       // 2. Enforce Zero Raw JSX Elements in MDX (Must use directives instead)
       if (
-        (node.type === 'mdxJsxFlowElement' ||
-          node.type === 'mdxJsxTextElement') &&
+        (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') &&
         !node.data?.isGeneratedDirective
       ) {
         const tagName = node.name || 'Component';
@@ -149,8 +145,7 @@ export function remarkFencedDivsPlugin() {
         if (APPROVED_COMPONENT_DIRECTIVES.has(directiveName)) {
           const attrs = node.attributes || {};
           const docsLabel = attrs.docsLabel || 'Documentation Astro';
-          const sampleDocLabel =
-            attrs.sampleDocLabel || 'Exemple de Document A4';
+          const sampleDocLabel = attrs.sampleDocLabel || 'Exemple de Document A4';
 
           node.type = 'mdxJsxFlowElement';
           node.name = 'HeroActions';
@@ -186,8 +181,7 @@ export function remarkFencedDivsPlugin() {
             if (!hasImport) {
               tree.children.unshift({
                 type: 'mdxjsEsm',
-                value:
-                  "import { HeroActions } from '/src/components/HeroActions.tsx';",
+                value: "import { HeroActions } from '/src/components/HeroActions.tsx';",
                 data: {
                   estree: {
                     type: 'Program',

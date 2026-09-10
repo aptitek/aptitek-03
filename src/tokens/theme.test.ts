@@ -38,12 +38,8 @@ describe('Theme definitions & Named Color Tokens', () => {
     expect(getThemeByMode('debug').palette.primary.main).toBe('#00ff66');
 
     expect(getTheme('dark').palette.mode).toBe('dark');
-    expect(getTheme({ theme: 'solarized', mode: 'light' }).palette.mode).toBe(
-      'light',
-    );
-    expect(
-      getTheme({ theme: 'solarized', mode: 'debug' }).palette.primary.main,
-    ).toBe('#00ff66');
+    expect(getTheme({ theme: 'solarized', mode: 'light' }).palette.mode).toBe('light');
+    expect(getTheme({ theme: 'solarized', mode: 'debug' }).palette.primary.main).toBe('#00ff66');
   });
 
   it('enforces pure highlights with zero drop shadows in darkmode', () => {
@@ -136,15 +132,9 @@ describe('Theme definitions & Named Color Tokens', () => {
     expect(CELESTIAL_COLORS.horizon.day).toBe('#fdf6e3');
     expect(CELESTIAL_COLORS.horizon.night).toBe('#002b36');
 
-    expect(darkTheme.palette.celestial.sun.main).toBe(
-      CELESTIAL_COLORS.sun.main,
-    );
-    expect(darkTheme.palette.celestial.moon.main).toBe(
-      CELESTIAL_COLORS.moon.main,
-    );
-    expect(lightTheme.palette.celestial.sun.glow).toBe(
-      CELESTIAL_COLORS.sun.glow,
-    );
+    expect(darkTheme.palette.celestial.sun.main).toBe(CELESTIAL_COLORS.sun.main);
+    expect(darkTheme.palette.celestial.moon.main).toBe(CELESTIAL_COLORS.moon.main);
+    expect(lightTheme.palette.celestial.sun.glow).toBe(CELESTIAL_COLORS.sun.glow);
   });
 
   it('provides named national and identity flag color tokens (EU, France, UK)', () => {

@@ -27,10 +27,7 @@ export default defineConfig({
       {
         test: {
           name: 'unit',
-          include: [
-            'src/**/*.{test,spec}.{ts,tsx}',
-            'tests/unit/**/*.{test,spec}.{ts,tsx}',
-          ],
+          include: ['src/**/*.{test,spec}.{ts,tsx}', 'tests/unit/**/*.{test,spec}.{ts,tsx}'],
           environment: 'node',
         },
       },

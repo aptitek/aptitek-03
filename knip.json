@@ -7,11 +7,7 @@
     "src/tokens/index.ts",
     "scripts/**/*.{js,ts}"
   ],
-  "project": [
-    "src/**/*.{astro,mdx,js,jsx,ts,tsx}",
-    "tests/**/*.{js,ts}",
-    "scripts/**/*.{js,ts}"
-  ],
+  "project": ["src/**/*.{astro,mdx,js,jsx,ts,tsx}", "tests/**/*.{js,ts}", "scripts/**/*.{js,ts}"],
   "ignoreDependencies": [
     "@astrojs/check",
     "@sonar/scan",
@@ -20,7 +16,7 @@
   ],
   "rules": {
     "duplicates": "off",
-    "exports": "off",
-    "types": "off"
+    "exports": "error",
+    "types": "error"
   }
 }

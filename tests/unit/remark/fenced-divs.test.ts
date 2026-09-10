@@ -26,13 +26,9 @@ Document généré pour AptiTek — Confidentiel.
 `;
 
     const result = await processor.render(doc);
-    expect(result.code).toContain(
-      '<p class="doc-subtitle subtitle">Sous-titre descriptif</p>',
-    );
+    expect(result.code).toContain('<p class="doc-subtitle subtitle">Sous-titre descriptif</p>');
     expect(result.code).toContain('<aside class="doc-callout" role="note">');
-    expect(result.code).toContain(
-      '<footer class="doc-footer-container" role="contentinfo">',
-    );
+    expect(result.code).toContain('<footer class="doc-footer-container" role="contentinfo">');
   });
 
   it('transforms ::::page into a structured ISO 216 A4 sheet with header and footer', async () => {
@@ -46,9 +42,7 @@ Contenu de la première page.
 `;
 
     const result = await processor.render(doc);
-    expect(result.code).toContain(
-      '<article class="a4-page-sheet" role="region">',
-    );
+    expect(result.code).toContain('<article class="a4-page-sheet" role="region">');
     expect(result.code).toContain('<header class="a4-page-header">');
     expect(result.code).toContain('<span class="a4-header-page">Page 1</span>');
     expect(result.code).toContain('<div class="a4-page-body">');
@@ -119,9 +113,7 @@ Feature card description text.
 
     const result = await processor.render(doc);
     expect(result.code).toContain('<header class="hero">');
-    expect(result.code).toContain(
-      '<div class="hero-badge" role="status">Status Badge</div>',
-    );
+    expect(result.code).toContain('<div class="hero-badge" role="status">Status Badge</div>');
     expect(result.code).toContain('<p class="doc-subtitle subtitle">');
     expect(result.code).toContain('<section class="features" role="region">');
     expect(result.code).toContain('<article class="feature-card">');

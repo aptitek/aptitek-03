@@ -12,10 +12,7 @@ const DEFAULT_FORBID_MAP = new Map([
     'button',
     'Native <button> is forbidden. Use <Button>, <IconButton>, or interactive component from @mui/material instead.',
   ],
-  [
-    'a',
-    'Native <a> is forbidden. Use <Link> or <Button href="..."> from @mui/material instead.',
-  ],
+  ['a', 'Native <a> is forbidden. Use <Link> or <Button href="..."> from @mui/material instead.'],
   [
     'input',
     'Native <input> is forbidden. Use <TextField> or <InputBase> from @mui/material instead.',

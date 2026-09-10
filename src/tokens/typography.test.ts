@@ -43,9 +43,7 @@ describe('Material Design 3 Typography & Recursive Tokens', () => {
         slnt: 0,
         crsv: 0.5,
       });
-      expect(formatted).toBe(
-        "'CASL' 1, 'MONO' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0.5",
-      );
+      expect(formatted).toBe("'CASL' 1, 'MONO' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0.5");
     });
   });
 
@@ -118,9 +116,7 @@ describe('Material Design 3 Typography & Recursive Tokens', () => {
 
       const linearHeading = resolveM3Typography('headlineSmall', 'linear');
       expect(linearHeading.fontFamily).toBe(FONT_FAMILIES.brand);
-      expect(linearHeading.fontVariationSettings).toBe(
-        RECURSIVE_PRESETS.linear,
-      );
+      expect(linearHeading.fontVariationSettings).toBe(RECURSIVE_PRESETS.linear);
 
       const monoLabel = resolveM3Typography('labelMedium', 'mono');
       expect(monoLabel.fontFamily).toBe(FONT_FAMILIES.mono);
